@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>REDIFICADOR MENTORING</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#faf7f2;--card:#fff;--ink:#2a2622;--mute:#6f675e;--line:#e6dfd4;--acc:#2f6f5e;--acc2:#e9f2ee;--warn:#b4532a;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1816;--card:#242120;--ink:#f0ebe3;--mute:#a39b90;--line:#38332e;--acc:#6fc2a8;--acc2:#23332d;--warn:#e68b5f;color-scheme:dark}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Georgia,"Times New Roman",serif}
+.wrap{max-width:780px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.6rem;margin:0 0 2px}
+.sub,.hint,.bar,.tabs,.row,.err,.why,label,.chip,.btn,.opt,.small{font-family:system-ui,sans-serif}
+.sub{color:var(--mute);margin:0 0 16px;font-size:.95rem}
+.bar,.tabs,.chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.bar{margin-bottom:14px}
+label{font-size:.85rem;color:var(--mute);display:block;margin-bottom:3px}
+select,input,textarea{font:inherit;font-family:system-ui,sans-serif;font-size:.95rem;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 11px;width:100%}
+.bar select{width:auto}
+textarea{resize:vertical;min-height:90px}
+.tabs{border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:16px}
+.tab,.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer;font-size:.9rem}
+.tab[aria-selected="true"],.chip.on{background:var(--acc);color:var(--bg);border-color:var(--acc)}
+.panel{display:none}.panel.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+@media(max-width:520px){.row{grid-template-columns:1fr}}
+.btn{background:var(--acc);color:var(--bg);border:0;border-radius:10px;padding:10px 16px;font-weight:600;font-size:.95rem;cursor:pointer}
+.btn.g{background:transparent;color:var(--mute);border:1px solid var(--line);padding:6px 12px;font-size:.85rem}
+.btn:disabled{opacity:.5;cursor:wait}
+.out{white-space:pre-wrap;margin-top:12px}.out:empty{display:none}
+.hint{color:var(--mute);font-size:.88rem;margin:0 0 12px}
+.chat{display:flex;flex-direction:column;gap:10px;margin-bottom:12px;max-height:55vh;overflow-y:auto}
+.msg{padding:10px 13px;border-radius:12px;white-space:pre-wrap;max-width:92%}
+.u{background:var(--acc2);align-self:flex-end}.a{background:var(--card);border:1px solid var(--line);align-self:flex-start}
+.send{display:flex;gap:8px}
+.q b{display:block;margin-bottom:6px}
+.opt{display:block;width:100%;text-align:left;margin:4px 0;padding:9px 12px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;cursor:pointer;font-size:.95rem}
+.opt.ok{border-color:var(--acc);background:var(--acc2)}.opt.bad{border-color:var(--warn)}
+.why,.small{font-size:.88rem;color:var(--mute);margin-top:6px}
+.score{font-weight:700;color:var(--acc)}
+.err{color:var(--warn);font-size:.9rem}
+.av{font-size:1.6rem;background:none;border:2px solid transparent;border-radius:12px;cursor:pointer;padding:2px 6px}
+.av.on{border-color:var(--acc);background:var(--acc2)}
+.stu{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.big{font-size:2rem}
+h3{margin:14px 0 8px;font-size:1.05rem}
+a.btn{text-decoration:none;display:inline-block}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50;font-family:system-ui,sans-serif}
+.ov[hidden]{display:none}
+.mdb{background:var(--card);border-radius:14px;padding:20px;max-width:380px;width:100%}
+.certb{background:#fffdf5;color:#2a2622;border:6px double #b8892b;border-radius:6px;padding:28px 20px;text-align:center;font-family:Georgia,serif}
+@media print{body *{visibility:hidden}#cert,#cert *{visibility:visible}#cert{position:absolute;inset:0;background:#fff}.noprint{display:none!important}}
+#hwp{display:none}
+@media print{body.ph>*:not(#hwp){display:none!important}body.ph #hwp,body.ph #hwp *{visibility:visible}body.ph #hwp{display:block;position:static;color:#000;background:#fff;font:13pt/1.7 Georgia,serif}}
+#uCard.nc .cc{display:none!important}
+.grade{font-size:2.4rem;font-weight:700;color:var(--acc);font-family:system-ui,sans-serif}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎓 REDIFICADOR MENTORING</h1>
+  <p class="sub">Registro de estudiantes, lecciones y cuestionarios por edad (3 a 18 años), y herramientas para madres, padres y tutores.</p>
+  <div class="bar"><label for="act" style="margin:0">Estudiante activo</label><select id="act"></select><select id="lang" aria-label="Idioma / Language" style="margin-left:auto"><option value="es">Español</option><option value="en">English</option></select></div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" data-p="est" aria-selected="true">👨‍👩‍👧 Estudiantes</button>
+    <button class="tab" role="tab" data-p="apr" aria-selected="false">📚 Aprender</button>
+    <button class="tab" role="tab" data-p="pln" aria-selected="false">📅 Plan diario</button>
+    <button class="tab" role="tab" data-p="hw" aria-selected="false">📓 Tarea</button>
+    <button class="tab" role="tab" data-p="dic" aria-selected="false">📖 Diccionario</button>
+    <button class="tab" role="tab" data-p="tut" aria-selected="false">🧑‍🎓 Tutor</button>
+    <button class="tab" role="tab" data-p="pro" aria-selected="false">📊 Progreso</button>
+    <button class="tab" role="tab" data-p="adu" aria-selected="false">📅 Adultos</button>
+  </div>
+
+  <section class="panel on" id="est">
+    <div class="card">
+      <div class="row">
+        <div><label>Nombre</label><input id="nom" maxlength="30" placeholder="Nombre o apodo"></div>
+        <div><label>Edad</label><select id="edad"></select></div>
+      </div>
+      <label>Clave del estudiante (mínimo 4 caracteres)</label><input id="nPin" type="password" maxlength="20" autocomplete="new-password" style="margin-bottom:12px">
+      <label>Avatar</label><div class="chips" id="avs" style="margin-bottom:12px"></div>
+      <button class="btn" id="reg">Registrar estudiante</button> <span class="err" id="regErr"></span>
+      <p class="small" id="note">Cargando…</p>
+    </div>
+    <div id="list"></div>
+  </section>
+
+  <section class="panel" id="apr">
+    <div id="aprMsg"></div>
+    <div id="aprBox" hidden>
+      <div class="card">
+        <label>Materia</label><div class="chips" id="subs" style="margin-bottom:10px"></div>
+        <label>Temas para <span id="bandTxt"></span></label><div class="chips" id="tops"></div>
+        <div class="send" style="margin-top:12px"><input id="own" placeholder="…o escribe otro tema"><button class="btn" id="ownBtn">Ver lección</button></div>
+      </div>
+      <div class="card" id="vMent" hidden><b>🎬 Videos recomendados por tu mentor</b><div id="vList" style="margin-top:8px"></div></div>
+      <div class="card" id="lesCard" hidden>
+        <div class="out" id="les"></div>
+        <div id="expBox" hidden style="margin-top:12px">
+          <b class="small">🔍 ¿Quieres que te lo explique mejor?</b>
+          <div class="chips" style="margin:6px 0"><button class="btn g" data-e="facil">Más fácil</button><button class="btn g" data-e="ejemplo">Otro ejemplo</button><button class="btn g" data-e="pasos">Paso a paso</button><button class="btn g" data-e="vida">En la vida real</button></div>
+          <div class="send"><input id="expIn" placeholder="Escribe tu duda sobre este tema…"><button class="btn" id="expBtn">Preguntar</button></div>
+          <div class="out" id="expOut"></div>
+        </div>
+        <div style="margin-top:12px"><button class="btn" id="qzBtn" hidden>📝 Hacer cuestionario</button> <span class="err" id="qzErr"></span></div>
+        <div id="vLinks" style="margin-top:14px"></div>
+      </div>
+      <div id="qz"></div>
+    </div>
+  </section>
+
+  <section class="panel" id="pln">
+    <p class="hint">Cada materia tiene un camino de 6 temas, uno por día (más tus lecciones fijas). Aquí ves qué toca hoy y cuánto llevas. Para avanzar hay que dominar cada tema (80% o más). Niveles: ○ sin empezar · ◔ intentado · ◑ familiar · ● competente · ★ dominado · ▶ hoy.</p>
+    <div class="err" id="planMsg"></div><div id="dxBox"></div><div id="certList"></div><div id="planList"></div>
+  </section>
+
+  <section class="panel" id="hw">
+    <p class="hint">Tarea diaria para el cuaderno de cada materia. El estudiante copia y resuelve los ejercicios en su cuaderno. Se puede imprimir o enviar por WhatsApp o correo.</p>
+    <div class="card">
+      <div class="row"><div><label>Materia (un cuaderno por materia)</label><select id="hSub"></select></div><div><label>Ejercicios por sección</label><select id="hN"><option>3</option><option selected>5</option><option>8</option></select></div></div>
+      <button class="btn" id="hGen">📓 Generar tarea de hoy</button> <span class="err" id="hErr"></span>
+    </div>
+    <div id="hOut"></div>
+    <div id="hHist"></div>
+  </section>
+
+  <section class="panel" id="dic">
+    <div class="card">
+      <div class="row">
+        <div><label>Materia (opcional)</label><select id="dSub"><option value="">General</option><option value="mat">Matemáticas</option><option value="len">Lengua</option><option value="cie">Ciencias</option><option value="soc">Sociales</option><option value="ing">Inglés</option><option value="dib">Dibujo técnico</option><option value="art">Arte</option><option value="pnl">PNL</option><option value="bib">Estudios bíblicos</option><option value="fis">Física</option><option value="qui">Química</option><option value="bio">Biología</option><option value="pro">Programación</option><option value="py">Python</option><option value="jav">Java</option><option value="ia">Inteligencia artificial</option><option value="dat">Ciencia de datos</option></select></div>
+        <div><label>Palabra que quieres entender</label><input id="dWord" maxlength="60" placeholder="Ej.: astros"></div>
+      </div>
+      <button class="btn" id="dBtn">Explicar</button>
+      <div class="out" id="dOut"></div>
+      <div class="chips" id="dRec" style="margin-top:12px"></div>
+    </div>
+  </section>
+
+  <section class="panel" id="tut">
+    <p class="hint">Pregunta lo que no entiendas. El tutor guía con pistas y preguntas en lugar de dar solo la respuesta.</p>
+    <div class="chat" id="chat"></div>
+    <div class="send"><input id="chatIn" placeholder="Escribe tu duda…" autocomplete="off"><button class="btn" id="chatBtn">Enviar</button></div>
+  </section>
+
+  <section class="panel" id="pro">
+    <div class="card"><label>Calificación de hoy</label><div id="pGrade"></div></div>
+    <div class="card"><h3 style="margin-top:0">🔁 Para reforzar</h3><div class="chips" id="pWeak"></div></div>
+    <div class="card"><h3 style="margin-top:0">📈 Gráficos de avance</h3><div id="pCh"></div></div>
+    <div class="card nc" id="uCard" hidden><h3 style="margin-top:0">🤖 Uso de IA (solo administrador)</h3><button class="btn g" id="cB" style="margin-bottom:10px">💲 Mostrar costo</button><div id="pUse"></div></div>
+    <div style="text-align:center;margin:8px 0"><button class="btn g" id="admB">🔒 Administrador</button></div>
+    <div class="card"><h3 style="margin-top:0">📲 Aviso al tutor o maestro</h3>
+      <div class="row"><div><label>Nombre</label><input id="tName" maxlength="40"></div><div><label>WhatsApp (con código de país, solo números)</label><input id="tWa" inputmode="numeric"></div><div><label>Correo</label><input id="tMail" type="email"></div></div>
+      <button class="btn g" id="tSave">Guardar contacto</button> <span class="small" id="tOk"></span>
+      <p class="small">La app no envía mensajes sola: abre WhatsApp o tu correo con el mensaje ya escrito y solo presionas enviar.</p>
+      <b class="small">Reporte del día:</b><div class="chips" id="pSend" style="margin-top:6px"></div>
+    </div>
+  </section>
+
+  <section class="panel" id="adu">
+    <div class="card"><h3 style="margin-top:0">✔ Mis lecciones fijas (revisadas por ti)</h3>
+      <p class="hint">Escribe lecciones con tu propio contenido. Los estudiantes las verán primero en Aprender, marcadas con ✔, y el cuestionario se creará solo con tu texto.</p>
+      <div class="row"><div><label>Materia</label><select id="fSub"></select></div><div><label>Edades</label><select id="fBand"></select></div></div>
+      <label>Título</label><input id="fTit" maxlength="60"><label style="margin-top:10px">Contenido de la lección</label><textarea id="fTxt" style="min-height:140px"></textarea>
+      <div style="margin-top:10px"><button class="btn" id="fSave">Guardar lección</button> <span class="small" id="fMsg"></span></div><div id="fList" style="margin-top:12px"></div>
+      <hr style="border:0;border-top:1px solid var(--line);margin:18px 0">
+      <h3 style="margin-top:0">🎬 Videos recomendados de YouTube</h3>
+      <p class="hint">Agrega los videos que tú revisaste. Los estudiantes los verán en Aprender, según la materia y la edad.</p>
+      <div class="row"><div><label>Materia</label><select id="vSub"></select></div><div><label>Edades</label><select id="vBand"></select></div><div><label>Título del video</label><input id="vTit" maxlength="80"></div><div><label>Enlace de YouTube</label><input id="vUrl" placeholder="https://www.youtube.com/watch?v=…"></div></div>
+      <button class="btn" id="vSave">Guardar video</button> <span class="small" id="vMsg"></span><div id="vAdmin" style="margin-top:12px"></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Plan de lecciones</h3>
+      <div class="row">
+        <div><label>Materia o tema</label><input id="pTema" placeholder="Ej.: ciencias: el sistema solar"></div>
+        <div><label>Duración</label><select id="pDur"><option>1 semana</option><option>2 semanas</option><option>1 mes</option></select></div>
+        <div><label>Tiempo diario</label><select id="pTime"><option>30 minutos</option><option selected>1 hora</option><option>2 horas</option></select></div>
+        <div><label>Estilo</label><select id="pEst"><option>Práctico y manual</option><option>Visual</option><option>Lectura y escritura</option><option>Mixto</option></select></div>
+      </div>
+      <button class="btn" id="pBtn">Generar plan</button><div class="out" id="pOut"></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Revisar un trabajo</h3>
+      <label>Consigna</label><input id="rCons" placeholder="Ej.: Explica el ciclo del agua">
+      <label style="margin-top:10px">Trabajo del estudiante</label><textarea id="rTxt"></textarea>
+      <div style="margin-top:10px"><button class="btn" id="rBtn">Revisar trabajo</button></div><div class="out" id="rOut"></div>
+    </div>
+  </section>
+</div>
+
+<div id="hwp"></div>
+<div class="ov" id="md" hidden><div class="mdb"><b id="mdT"></b><p class="small" id="mdH"></p><input id="mdI" type="password" autocomplete="off"><div class="chips" style="margin-top:12px"><button class="btn" id="mdOk">Aceptar</button><button class="btn g" id="mdNo">Cancelar</button></div></div></div>
+<div class="ov" id="cert" hidden><div style="max-width:620px;width:100%"><div class="certb" id="certB"></div><div class="chips noprint" style="margin-top:12px;justify-content:center"><button class="btn" id="certP">🖨️ Imprimir / guardar PDF</button><button class="btn g" id="certX" style="background:var(--card)">Cerrar</button></div><p class="small noprint" style="text-align:center;color:#fff">Si no se abre la impresión, toma una captura de pantalla.</p></div></div>
+<script>
+/* Conexión con tu servidor de IA (/api/ai). Reemplaza la IA de claude.ai en el sitio propio. */
+(function(){
+  if(window.claude)return;
+  async function call(messages){
+    let code=localStorage.getItem('acc')||'';
+    if(!code){code=(window.prompt('Escribe el código de acceso de prueba')||'').trim();if(code)localStorage.setItem('acc',code)}
+    const r=await fetch('/api/ai',{method:'POST',headers:{'Content-Type':'application/json','x-access':code},body:JSON.stringify({messages})});
+    const j=await r.json().catch(()=>({}));
+    if(r.status===401){localStorage.removeItem('acc');throw new Error('Código de acceso incorrecto.')}
+    if(!r.ok)throw new Error((j.error||'La IA no respondió. Inténtalo de nuevo.')+(j.detalle?': '+j.detalle:'')+' (código '+r.status+(j.estado?'/'+j.estado:'')+')');
+    if(j.usage)window.__u={i:j.usage.input_tokens||0,o:j.usage.output_tokens||0};
+    return j.text||'';
+  }
+  const sample=async(p,o)=>{const messages=typeof p==='string'?[{role:'user',content:p}]:p;const text=await call(messages);if(o&&o.onText)o.onText({text});return{text}};
+  sample.json=async(p,o)=>{
+    const text=await call([{role:'user',content:p+'\n\nResponde únicamente con JSON válido, sin texto adicional ni bloques de código.'}]);
+    const m=text.replace(/```json|```/g,'').trim();
+    try{return JSON.parse(m)}catch(e){const a=m.search(/[\[{]/),b=Math.max(m.lastIndexOf(']'),m.lastIndexOf('}'));return JSON.parse(m.slice(a,b+1))}
+  };
+  window.claude={use:async n=>n==='sample'?sample:null};
+})();
+</script>
+<script>
+const $=id=>document.getElementById(id);
+window.addEventListener('error',e=>{const r=document.getElementById('regErr');if(r)r.textContent='Error: '+e.message});
+window.addEventListener('unhandledrejection',e=>{['regErr','fMsg','vMsg','tOk'].forEach(i=>{const r=document.getElementById(i);if(r)r.textContent='Error: '+((e.reason&&e.reason.message)||e.reason)})});
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const SUBJ={mat:'🔢 Matemáticas',len:'📖 Lengua',cie:'🔬 Ciencias',soc:'🌎 Sociales',ing:'🗣️ Inglés',dib:'📐 Dibujo técnico',art:'🎨 Arte',pnl:'🧠 PNL',bib:'✝️ Estudios bíblicos',fis:'⚛️ Física',qui:'🧪 Química',bio:'🧬 Biología',pro:'💻 Programación',py:'🐍 Python',jav:'☕ Java',ia:'🤖 Inteligencia artificial',dat:'📊 Ciencia de datos'};
+const BANDS=['3–5 años','6–8 años','9–11 años','12–14 años','15–18 años'];
+const T={
+mat:'Contar hasta 10|Formas y colores|Más y menos/Suma y resta|Tablas de multiplicar|Medir y comparar/Fracciones|Decimales y porcentajes|Área y perímetro/Álgebra básica|Proporciones|Geometría y ángulos/Funciones|Trigonometría|Probabilidad y estadística',
+len:'Letras y sonidos|Cuentos cortos|Rimas y vocabulario/Leer oraciones|Sustantivos y verbos|Escribir un cuento/Comprensión lectora|Ortografía y acentos|El párrafo/Tipos de texto|Figuras literarias|El ensayo/Análisis literario|Argumentación|Redacción académica',
+cie:'Animales y hábitats|Las plantas|El clima y las estaciones/Los cinco sentidos|El ciclo del agua|El cuerpo humano/El sistema solar|La materia y sus estados|Ecosistemas/La célula|Fuerza y movimiento|Cambio climático/Genética|El átomo|Energía y electricidad',
+soc:'Mi familia y comunidad|Los oficios|Normas de convivencia/Mapas y puntos cardinales|Mi país|Culturas del mundo/Civilizaciones antiguas|Continentes y océanos|Derechos y deberes/Edad Media y Renacimiento|Independencias de América|Economía básica/Revoluciones modernas|Siglo XX|Ciudadanía y democracia',
+ing:'Colors and numbers|Animals|Greetings/Family and home|Food|Action verbs/Present simple|Describing people|Daily routine/Past simple|Future: will and going to|Comparatives/Present perfect|Conditionals|Writing a formal email',
+dib:'Líneas y trazos|Formas geométricas|Dibujar con regla/Instrumentos de dibujo|Escalas y medidas|Figuras con compás/Vistas ortogonales|Perspectiva isométrica|Acotación/Dibujo de planos|Cortes y secciones|Tolerancias/Normas y diseño asistido|Proyecto de dibujo mecánico|Planos arquitectónicos',
+art:'Colores primarios|Garabatos y trazos|Collage con papel/Mezcla de colores|Dibujar mi familia|Arte con material reciclado/Perspectiva simple|Luz y sombra|Arte del mundo/Retrato y proporciones|Historia del arte|Técnicas de pintura/Composición visual|Movimientos artísticos|Portafolio personal',
+pnl:'Mis emociones|Respirar con calma|Decir cosas positivas/Nombrar mis emociones|Escuchar con atención|Metas pequeñas/Los sentidos y el aprendizaje|Pensamientos que ayudan|Comunicarme mejor/Estilos de aprendizaje|Confianza y seguridad|Manejo del estrés/Metas SMART|Comunicación asertiva|Creencias que limitan',
+bib:'Dios creó el mundo|Jesús ama a los niños|Historias de la Biblia/Noé y el arca|David y Goliat|Las parábolas de Jesús/Los diez mandamientos|José y sus hermanos|La vida de Jesús/Los profetas|Los Evangelios|Proverbios y sabiduría/Las cartas de Pablo|Cómo estudiar la Biblia|Fe y propósito de vida'};
+const T2={
+mat:'Números del 1 al 20|Grande y pequeño|Patrones y series/Números hasta 100|El reloj y las horas|Figuras y cuerpos geométricos/División|Los números romanos|Gráficos y tablas/Números enteros|Ecuaciones simples|Potencias y raíces/Logaritmos|Límites y derivadas|Matrices y sistemas',
+len:'Mi nombre y mis letras|Escuchar y repetir|Palabras que empiezan igual/Sílabas y palabras|Mayúsculas y puntos|La descripción/Sinónimos y antónimos|La carta y el correo|La noticia/Narrador y personajes|La poesía|Análisis de oraciones/Literatura latinoamericana|Oratoria y debate|El informe de investigación',
+cie:'El agua|El día y la noche|Cuidar la naturaleza/Los estados del agua|Seres vivos y no vivos|La luz y la sombra/Los huesos y músculos|La energía|El suelo y las rocas/Los átomos y moléculas|El método científico|Electricidad y magnetismo/Evolución|Ondas y óptica|Química orgánica',
+soc:'Mi escuela|Los medios de transporte|Fiestas y tradiciones/Mi barrio y ciudad|Pueblos originarios|Los símbolos patrios/La Colonia|Regiones y clima|Las instituciones del país/Imperios antiguos|Globalización|Población y migración/Guerras mundiales|Geopolítica actual|Derechos humanos',
+ing:'Body parts|Fruits|Shapes/Days and months|Clothes|Weather/Can and cannot|Prepositions of place|There is and there are/Present continuous|Question words|Modal verbs/Passive voice|Reported speech|Writing an essay',
+dib:'Puntos y líneas|Copiar dibujos sencillos|Simetría/Dibujo con escuadra|Círculos y arcos|Cuadrículas/Rotulación técnica|Vistas de un objeto|Dibujo a mano alzada/Proyecciones|Planos de una casa|Dibujo digital básico/Dibujo de conjuntos|Ensamblajes|Presentación de un plano',
+art:'Pintar con los dedos|Modelar con plastilina|Música y movimiento/Dibujo de animales|Pintura con acuarela|Esculturas sencillas/Dibujo de paisajes|Arte con texturas|Artistas famosos/Dibujo de la figura humana|Grabado y sellos|Arte digital/Fotografía y encuadre|Arte contemporáneo|Crítica de arte',
+pnl:'Compartir y esperar turno|Dar las gracias|Sonreír y saludar/Calmarme cuando me enojo|Hacer amigos|Pedir ayuda/Mi voz interior|Trabajar en equipo|Superar el miedo/Motivación y hábitos|Lenguaje corporal|Resolver conflictos/Liderazgo personal|Hablar en público|Gestión del tiempo',
+bib:'Adán y Eva|La oración|Dios cuida de mí/Moisés y el mar|Daniel y los leones|El buen samaritano/Abraham y la fe|Los discípulos de Jesús|El nacimiento de Jesús/El Sermón del Monte|Los milagros de Jesús|Las bienaventuranzas/Los Salmos|La armadura de Dios|La resurrección y la esperanza'};
+const TN={
+fis:'Empujar y jalar|Cosas que flotan y se hunden|Imanes|Luz y sombras|Sonidos fuertes y suaves|Rápido y lento/Fuerzas y movimiento|La gravedad|El sonido y las vibraciones|La luz y los colores|El calor y la temperatura|Máquinas simples/Velocidad y tiempo|Fuerza y fricción|Energía y sus tipos|Electricidad básica|Magnetismo|Ondas y sonido/Leyes de Newton|Trabajo y potencia|Calor y termodinámica básica|Circuitos eléctricos|Óptica: espejos y lentes|Presión y fluidos/Cinemática|Dinámica y leyes de Newton|Energía y conservación|Ondas y óptica|Electromagnetismo|Física moderna: relatividad y cuántica',
+qui:'Mezclar colores|Sólido, líquido y gas|Cosas que se disuelven|Olores y sabores|Cocina y cambios|Hielo que se derrite/Materia y sus propiedades|Mezclas y separación|Cambios de estado|Ácidos y bases en la cocina|El agua|Reciclar materiales/Átomos y moléculas|Elementos y símbolos|Mezclas y soluciones|Cambios físicos y químicos|La tabla periódica|Reacciones en la vida diaria/Estructura del átomo|Enlaces químicos|Ecuaciones químicas|Ácidos, bases y pH|Estequiometría básica|La mol/Tabla periódica y propiedades|Reacciones y balanceo|Termoquímica|Equilibrio químico|Química orgánica básica|Electroquímica',
+bio:'Mi cuerpo|Animales y sus casas|Plantas que crecen|Los cinco sentidos|Ciclo de vida de la mariposa|Cuidar a los animales/Seres vivos|Partes de la planta|Cadenas alimentarias|Huesos y músculos|Hábitats|Alimentación saludable/Clasificación de los seres vivos|La fotosíntesis|Sistema digestivo|Sistema respiratorio|Ecosistemas|Reproducción de plantas y animales/La célula|ADN y herencia|Sistemas del cuerpo humano|Evolución y selección natural|Microorganismos|Ecología y biodiversidad/Biología celular y metabolismo|Genética molecular|Evolución|Fisiología humana|Biotecnología|Ecología y sostenibilidad',
+pro:'Dar instrucciones paso a paso|Secuencias y patrones|Robot de papel|Arriba, abajo, izquierda y derecha|Encontrar errores en una secuencia|Juego de órdenes/¿Qué es un algoritmo?|Programar con bloques|Repeticiones (bucles)|Decisiones: si entonces|Encontrar y corregir errores|Crear un juego sencillo/Variables|Condicionales|Bucles|Funciones|Listas|Proyecto: mi primer programa/Lógica y diagramas de flujo|Estructuras de datos básicas|Funciones y modularidad|Depuración y pruebas|Páginas web con HTML y CSS|Proyecto: una app sencilla/Estructuras de datos|Algoritmos de búsqueda y orden|Programación orientada a objetos|Control de versiones con Git|Bases de datos y SQL|Proyecto: aplicación completa',
+py:'Hablar con el computador|Reconocer letras y números|Patrones de sonidos y colores|Mi primer robot de cartón|Ordenar cosas por tamaño|Contar con los dedos/Mi primer programa: imprimir|Números y operaciones|Texto y nombres|Preguntar al usuario con input|Decisiones simples|Dibujar con la tortuga (turtle)/Variables y tipos de datos|Condicionales if y else|Bucles for y while|Listas|Funciones|Mini proyecto: juego de adivinar/Diccionarios y tuplas|Archivos|Módulos y librerías|Funciones avanzadas|Manejo de errores|Proyecto: aplicación de consola/Programación orientada a objetos|Comprensión de listas|APIs y JSON|Pandas y NumPy básico|Pruebas con pytest|Proyecto: automatización',
+jav:'Ordenar para programar|Reglas y pasos|Secuencias con tarjetas|Cajas con nombre|Juego de órdenes|Detective de errores/¿Qué es un lenguaje de programación?|Lógica y algoritmos con juegos|Piezas de un programa|Números y letras en el computador|Decisiones en la vida diaria|Pensamiento computacional/Primer programa en Java|Variables y tipos|Operadores|Condicionales|Bucles|Métodos/Clases y objetos|Arreglos y ArrayList|Herencia|Encapsulamiento|Excepciones|Proyecto: juego de consola/POO avanzada|Colecciones y genéricos|Interfaces y polimorfismo|Archivos y flujos|Introducción a Spring Boot|Pruebas con JUnit',
+ia:'Los robots y las máquinas|Cómo aprenden los niños y las máquinas|Reconocer caras y objetos|Asistentes de voz|Usar la tecnología con cuidado|Máquinas que ayudan/¿Qué es la inteligencia artificial?|Robots y sensores|Aprender con ejemplos|Reconocer imágenes|Preguntar a un asistente de IA|Uso seguro de la IA/Datos y patrones|Cómo aprende una máquina|Clasificar objetos|Chatbots|Sesgos: cuando la IA se equivoca|Ética y uso responsable/Aprendizaje automático|Redes neuronales simples|Entrenar un modelo|IA generativa y prompts|Sesgos y justicia|La IA en la sociedad/Aprendizaje supervisado|Redes neuronales|Procesamiento de lenguaje natural|Visión por computadora|Ética y regulación de la IA|Proyecto con IA',
+dat:'Contar y ordenar objetos|Clasificar por color y forma|Pictogramas|Más, menos, igual|Preguntar a los amigos|Gráfico de mi día/Recoger datos|Tablas de conteo|Gráficos de barras|Pictogramas y símbolos|Lo más común (la moda)|Preguntas con datos/Tablas y gráficos|Promedio|Mediana y moda|Encuestas|Datos en una hoja de cálculo|Contar historias con datos/Estadística descriptiva|Fórmulas en hojas de cálculo|Gráficos y visualización|Probabilidad básica|Correlación|Limpieza de datos/Estadística e inferencia|Python y Pandas para datos|Visualización con gráficos|Regresión lineal|Introducción al aprendizaje automático|Proyecto de análisis de datos'};
+const topics=(k,b)=>T[k]?T[k].split('/')[b].split('|').concat(T2[k].split('/')[b].split('|')):TN[k].split('/')[b].split('|');
+const AVS=['🦊','🐼','🦁','🐸','🦄','🚀'];
+const band=a=>a<=5?0:a<=8?1:a<=11?2:a<=14?3:4;
+let S=[],act=null,sample=null,docRef=null,subj='mat',topic='',av=AVS[0],hist=[],LES=[],VID=[],FX=null,TU={name:'',wa:'',mail:''};
+const today=()=>new Date().toLocaleDateString('en-CA');
+const lab=g=>g>=90?'Excelente':g>=70?'Bien':g>=50?'Regular':'A reforzar';
+function dayGrade(s){const q=(s.log||[]).filter(x=>x.d===today()&&x.t==='q');return q.length?Math.round(q.reduce((a,x)=>a+x.p,0)/q.length):null}
+function logEv(t,k,p){const s=cur();if(!s)return;s.log=(s.log||[]).concat({d:today(),t,k,p}).slice(-300)}
+function links(msg){msg=trStr(msg);
+  const w=(TU.wa||'').replace(/\D/g,''),m=TU.mail||'';let h='';
+  if(w)h+=`<a class="btn" target="_blank" rel="noopener" href="https://wa.me/${w}?text=${encodeURIComponent(msg)}">💬 WhatsApp</a>`;
+  if(m)h+=`<a class="btn" target="_blank" rel="noopener" href="mailto:${m}?subject=${encodeURIComponent('Reporte de tarea')}&body=${encodeURIComponent(msg)}">✉️ Correo</a>`;
+  return h||'<span class="small">Agrega el contacto del tutor en la pestaña Progreso para poder enviar avisos.</span>';
+}
+function fillTutor(){$('tName').value=TU.name||'';$('tWa').value=TU.wa||'';$('tMail').value=TU.mail||''}
+const cur=()=>S.find(s=>s.id===act)||null;
+const age=()=>cur()?cur().age:10;
+const UNL=new Set();
+/* Idioma ES/EN: traductor de la interfaz + IA en el idioma elegido */
+var LANG=(function(){try{return localStorage.getItem('lang')||((navigator.language||'es').slice(0,2)==='en'?'en':'es')}catch(e){return 'es'}})(),TOP=(function(){try{return JSON.parse(localStorage.getItem('topen'))||{}}catch(e){return {}}})(),topBusy=false,topFail=0;
+const DICT=`^Estudiantes=>Students
+^Aprender=>Learn
+^Plan diario=>Daily plan
+^Tarea=>Homework
+^Diccionario=>Dictionary
+^Progreso=>Progress
+^Adultos=>Adults
+^Nombre=>Name
+^Nombre:=>Name:
+^Edad=>Age
+^Edades=>Ages
+^Materia=>Subject
+^Título=>Title
+^Duración=>Duration
+^Ver=>View
+^Bien=>Good
+^Enviar=>Send
+^Copiar=>Copy
+^Imprimir=>Print
+^Cerrar=>Close
+^Elegir=>Choose
+^Eliminar=>Delete
+^Preguntar=>Ask
+^Explicar=>Explain
+^Estudiante=>Student
+^Consultas=>Queries
+^Aceptar=>OK
+^Administrador=>Administrator
+^Salir de administrador=>Exit administrator mode
+^Mostrar costo=>Show cost
+^Ocultar costo=>Hide cost
+Uso de IA (solo administrador)=>AI usage (administrator only)
+Crea tu clave de administrador=>Create your administrator password
+Mínimo 4 caracteres. Solo tú deberías conocerla.=>Minimum 4 characters. Only you should know it.
+Clave de administrador=>Administrator password
+Escribe tu clave.=>Enter your password.
+^Cancelar=>Cancel
+^Correo=>Email
+^Guardado ✓=>Saved ✓
+^Guardada ✓=>Saved ✓
+^hecha=>done
+^pendiente=>pending
+^Fecha=>Date
+^Fecha:=>Date:
+^Excelente=>Excellent
+^A reforzar=>Needs reinforcement
+^Activo ✓=>Active ✓
+^Matemáticas=>Mathematics
+^Lengua=>Language arts
+^Ciencias=>Science
+^Sociales=>Social studies
+^Inglés=>English
+^Dibujo técnico=>Technical drawing
+^Arte=>Art
+^PNL=>NLP
+^Estudios bíblicos=>Bible studies
+^Física=>Physics
+^Química=>Chemistry
+^Biología=>Biology
+^Programación=>Programming
+^Inteligencia artificial=>Artificial intelligence
+^Ciencia de datos=>Data science
+^General=>General
+^Todas las edades=>All ages
+^Todas=>All
+Registro de estudiantes, lecciones y cuestionarios por edad (3 a 18 años), y herramientas para madres, padres y tutores.=>Student registration, lessons and quizzes by age (3 to 18), and tools for parents and tutors.
+Estudiante activo=>Active student
+— elige un estudiante —=>— choose a student —
+Clave del estudiante (mínimo 4 caracteres)=>Student password (minimum 4 characters)
+Registrar estudiante=>Register student
+Cargando…=>Loading…
+Los perfiles se guardan de forma privada en tu cuenta.=>Profiles are stored privately in your account.
+Los perfiles se guardan solo en este navegador.=>Profiles are stored only in this browser.
+Escribe un nombre.=>Enter a name.
+La clave debe tener al menos 4 caracteres.=>The password must have at least 4 characters.
+¿Seguro?=>Sure?
+Poner clave=>Set password
+Cambiar clave=>Change password
+Aún no hay estudiantes. Registra el primero arriba.=>No students yet. Register the first one above.
+sin cuestionarios=>no quizzes yet
+Clave de=>Password for
+Nueva clave para=>New password for
+Escribe la clave de este estudiante.=>Enter this student's password.
+Clave incorrecta. Intenta de nuevo.=>Wrong password. Try again.
+Elige o registra a un estudiante en la pestaña=>Choose or register a student in the tab
+Temas para=>Topics for
+…o escribe otro tema=>…or type another topic
+Ver lección=>View lesson
+Preparando la lección…=>Preparing the lesson…
+Hacer cuestionario=>Take the quiz
+Preparando preguntas…=>Preparing questions…
+¿Quieres que te lo explique mejor?=>Want a better explanation?
+Más fácil=>Easier
+Otro ejemplo=>Another example
+Paso a paso=>Step by step
+En la vida real=>In real life
+Escribe tu duda sobre este tema…=>Type your question about this topic…
+Pensando…=>Thinking…
+Videos recomendados por tu mentor=>Videos recommended by your mentor
+Buscar en YouTube=>Search on YouTube
+Videos que explican=>Explanatory videos
+Ejemplos y práctica=>Examples and practice
+Un adulto debe elegir y acompañar el video.=>An adult should choose and watch the video along.
+Lección revisada por tu mentor=>Lesson reviewed by your mentor
+¡Correcto!=>Correct!
+¡Muy bien, lo lograste al intentarlo de nuevo!=>Well done, you got it on the second try!
+Aún no, ¡y está bien: así se aprende!=>Not yet, and that's okay: that's how we learn!
+Pista:=>Hint:
+Relee el enunciado con calma.=>Reread the question calmly.
+Inténtalo de nuevo.=>Try again.
+Veamos juntos:=>Let's look together:
+La respuesta correcta es=>The correct answer is
+Nivel de dominio:=>Mastery level:
+Sin empezar=>Not started
+Intentado=>Attempted
+Competente=>Proficient
+Dominado=>Mastered
+sin empezar=>not started
+intentado=>attempted
+competente=>proficient
+dominado=>mastered
+¡Dominaste este tema! Ya puedes pasar al siguiente día del plan.=>You mastered this topic! You can move on to the next day of the plan.
+Todavía no llegas a 80%. No pasa nada: repasa los comentarios y practica otra vez con preguntas nuevas.=>You haven't reached 80% yet. No problem: review the feedback and practice again with new questions.
+Practicar de nuevo=>Practice again
+¡Tarea cumplida!=>Task completed!
+Avisa a=>Notify
+para que revise el avance:=>so they can review the progress:
+tu tutor=>your tutor
+Cada materia tiene un camino de 6 temas, uno por día (más tus lecciones fijas).=>Each subject has a path of 6 topics, one per day (plus your fixed lessons).
+Aquí ves qué toca hoy y cuánto llevas.=>Here you see what is next today and how far you are.
+Para avanzar hay que dominar cada tema (80% o más).=>To advance, master each topic (80% or more).
+Niveles:=>Levels:
+¡Materia completada!=>Subject completed!
+Generar 6 temas nuevos=>Generate 6 new topics
+Creando temas…=>Creating topics…
+Diagnóstico de=>Diagnostic:
+Diagnóstico=>Diagnostic
+Responde sin ayuda. No es una nota: sirve para saber desde dónde empezar.=>Answer without help. It is not a grade: it shows where to start.
+Tu plan empieza en:=>Your plan starts at:
+¡Ya conoces todo este nivel!=>You already know this whole level!
+Primero registra a un estudiante en la pestaña Estudiantes.=>First register a student in the Students tab.
+Certificado de logro=>Certificate of achievement
+Se otorga a=>Awarded to
+por completar con éxito el curso de=>for successfully completing the course in
+con un promedio de=>with an average of
+¡Felicitaciones! Tu esfuerzo y constancia dan frutos.=>Congratulations! Your effort and persistence pay off.
+Tu mentor=>Your mentor
+Imprimir / guardar PDF=>Print / save as PDF
+Certificados de=>Certificates of
+Materia (opcional)=>Subject (optional)
+Palabra que quieres entender=>Word you want to understand
+Recientes:=>Recent:
+Buscando…=>Searching…
+¡Hola=>Hello
+Soy tu tutor.=>I'm your tutor.
+¿Qué estás estudiando hoy?=>What are you studying today?
+Pregunta lo que no entiendas. El tutor guía con pistas y preguntas en lugar de dar solo la respuesta.=>Ask what you don't understand. The tutor guides you with hints and questions instead of just giving the answer.
+Materia (un cuaderno por materia)=>Subject (one notebook per subject)
+Ejercicios por sección=>Exercises per section
+Generar tarea de hoy=>Generate today's homework
+Preparando la tarea…=>Preparing the homework…
+Respuestas (solo adultos)=>Answers (adults only)
+Marcar tarea hecha=>Mark homework as done
+Tarea hecha=>Homework done
+Tareas anteriores=>Previous homework
+¡Buen trabajo!=>Great job!
+Tarea de=>Homework:
+TAREA DE=>HOMEWORK:
+terminó la tarea de=>completed the homework for
+terminó la tarea:=>completed the task:
+Cuestionario:=>Quiz:
+Calificación del día:=>Grade of the day:
+Calificación de hoy=>Grade for today
+Calificación del día=>Grade of the day
+Reporte de=>Report for
+Lecciones:=>Lessons:
+Palabras consultadas:=>Words looked up:
+Para reforzar=>To reinforce
+todavía no hay actividad hoy.=>no activity yet today.
+Aún no hay cuestionarios hoy.=>No quizzes yet today.
+Gráficos de avance=>Progress charts
+Promedio por materia=>Average by subject
+Uso de IA y costo estimado=>AI usage and estimated cost
+Aviso al tutor o maestro=>Notice to tutor or teacher
+Guardar contacto=>Save contact
+Reporte del día:=>Daily report:
+Guardando…=>Saving…
+Mis lecciones fijas (revisadas por ti)=>My fixed lessons (reviewed by you)
+Contenido de la lección=>Lesson content
+Guardar lección=>Save lesson
+Videos recomendados de YouTube=>Recommended YouTube videos
+Título del video=>Video title
+Enlace de YouTube=>YouTube link
+Guardar video=>Save video
+Plan de lecciones=>Lesson plan
+Materia o tema=>Subject or topic
+Tiempo diario=>Daily time
+Generar plan=>Generate plan
+Revisar un trabajo=>Review a piece of work
+Consigna=>Assignment
+Trabajo del estudiante=>Student's work
+Revisar trabajo=>Review work
+La IA no está disponible en esta vista. Ábrela desde claude.ai y acepta el permiso.=>AI is not available in this view. Open it from claude.ai and accept the permission.`;
+const NUM=[[/nivel (\d+–\d+) años/g,'level: ages $1'],[/(\d+)–(\d+) años/g,'ages $1–$2'],[/(\d+) años/g,'$1 years old'],[/(\d+) lecciones/g,'$1 lessons'],[/promedio (\d+)%/g,'average $1%'],[/hoy (\d+)%/g,'today $1%'],[/(\d+)\/(\d+) temas/g,'$1/$2 topics'],[/Día (\d+):/g,'Day $1:'],[/Resultado: (\d+)%/g,'Result: $1%'],[/Resultado: (\d+) de (\d+)/g,'Result: $1 of $2'],[/(\d+) cuestionarios? hoy/g,'$1 quiz(zes) today']];
+const EX={},PH=[];
+DICT.split('\n').forEach(l=>{const i=l.indexOf('=>');if(i<1)return;const k=l.slice(0,i),v=l.slice(i+2);if(k[0]==='^')EX[k.slice(1)]=v;else PH.push([new RegExp('(?<![\\p{L}\\d])'+k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?![\\p{L}\\d])','gu'),v,k.length])});
+PH.sort((a,b)=>b[2]-a[2]);
+function trCore(c){
+  if(EX[c]!==undefined)return EX[c];
+  if(TOP[c])return TOP[c];
+  const p=c.split(' · ');if(p.length>1)return p.map(trCore).join(' · ');
+  const d=c.match(/^(▶ Día (\d+): )(.+)$/);if(d)return '▶ Day '+d[2]+': '+(TOP[d[3]]||d[3]);
+  const m=c.match(/^((?:\d+\.\s*)?[^\p{L}\d¿¡"“]*)([\s\S]+)$/u);
+  if(m&&m[1]){const r=EX[m[2]]!==undefined?EX[m[2]]:TOP[m[2]];if(r!==undefined)return m[1]+r}
+  let r=c;for(const x of PH)r=r.replace(x[0],x[1]);for(const x of NUM)r=r.replace(x[0],x[1]);return r}
+function trStr(s){if(LANG!=='en'||!s)return s;const m=String(s).match(/^(\s*)([\s\S]*?)(\s*)$/);return m[2]?m[1]+trCore(m[2])+m[3]:s}
+const ORIG=new WeakMap();
+function trNode(n){const raw=n.nodeValue,st=ORIG.get(n),pn=n.parentNode&&n.parentNode.nodeName;if(/^(SCRIPT|STYLE|TEXTAREA)$/.test(pn))return;
+  if(LANG==='en'){if(st&&raw===st.t)return;if(!/\S/.test(raw))return;const t=trStr(raw);if(t!==raw){ORIG.set(n,{o:raw,t});n.nodeValue=t}}
+  else if(st&&raw===st.t){n.nodeValue=st.o;ORIG.delete(n)}}
+function trAttr(el){if(!el.getAttribute)return;const v=el.getAttribute('placeholder');if(v===null)return;if(el._ph===undefined)el._ph=v;el.setAttribute('placeholder',LANG==='en'?trStr(el._ph):el._ph)}
+function trTree(root){if(root.nodeType===3){trNode(root);return}
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode()))trNode(n);
+  trAttr(root);if(root.querySelectorAll)root.querySelectorAll('[placeholder]').forEach(trAttr)}
+const obs=new MutationObserver(ms=>{for(const m of ms){if(m.type==='characterData')trNode(m.target);else m.addedNodes.forEach(trTree)}obs.takeRecords()});
+obs.observe(document.body,{childList:true,subtree:true,characterData:true});
+function setLang(l){LANG=l==='en'?'en':'es';try{localStorage.setItem('lang',LANG)}catch(e){}document.documentElement.lang=LANG;trTree(document.body);obs.takeRecords();renderAll()}
+$('lang').value=LANG;document.documentElement.lang=LANG;$('lang').onchange=()=>setLang($('lang').value);
+if(LANG==='en'){trTree(document.body);obs.takeRecords()}
+async function ensureTopics(){
+  if(topBusy||LANG!=='en'||Date.now()-topFail<60000)return;const s=cur(),b=band(s?s.age:10);
+  const miss=[...new Set(Object.keys(SUBJ).flatMap(k=>topics(k,b)))].filter(t=>!TOP[t]);if(!miss.length)return;topBusy=true;
+  try{const sm=await need();const d=await sm.json(`Translate these Spanish school topic titles into natural English. Respond ONLY with a JSON object mapping each exact Spanish title to its English translation: ${JSON.stringify(miss)}`,{cache:false});
+    let n=0;for(const k of miss)if(d&&typeof d[k]==='string'&&d[k].trim()){TOP[k]=d[k].replace(/[<>"&]/g,'').trim();n++}
+    if(n){try{localStorage.setItem('topen',JSON.stringify(TOP))}catch(e){}topBusy=false;renderAll();return}
+    topFail=Date.now();
+  }catch(e){topFail=Date.now()}
+  topBusy=false}
+const LV=['Sin empezar','Intentado','Familiar','Competente','Dominado'],IC=['○','◔','◑','●','★'];
+const hp=async(p,salt)=>{try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(salt+p));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return 'x'+btoa(unescape(encodeURIComponent(salt+p)))}};
+function ask(title,hint){return new Promise(res=>{$('mdT').textContent=title;$('mdH').textContent=hint||'';$('mdI').value='';$('md').hidden=false;$('mdI').focus();
+  const end=v=>{$('md').hidden=true;$('mdOk').onclick=$('mdNo').onclick=$('mdI').onkeydown=null;res(v)};
+  $('mdOk').onclick=()=>end($('mdI').value);$('mdNo').onclick=()=>end(null);$('mdI').onkeydown=e=>{if(e.key==='Enter')end($('mdI').value)}})}
+async function unlock(id){const s=S.find(x=>x.id===id);if(!s)return false;if(!s.pin||UNL.has(id))return true;
+  for(let i=0;i<3;i++){const v=await ask('🔒 Clave de '+s.name,i?'Clave incorrecta. Intenta de nuevo.':'Escribe la clave de este estudiante.');if(v===null)return false;if(await hp(v,s.salt)===s.pin){UNL.add(id);return true}}
+  return false}
+async function choose(id){if(await unlock(id))pick(id);else renderBar()}
+async function setPin(id){const s=S.find(x=>x.id===id);if(!s||!(await unlock(id)))return;
+  const v=await ask('🔑 Nueva clave para '+s.name,'Mínimo 4 caracteres.');if(v===null)return;
+  if(v.length<4){$('regErr').textContent='La clave debe tener al menos 4 caracteres.';return}
+  $('regErr').textContent='';s.salt=Math.random().toString(36).slice(2);s.pin=await hp(v,s.salt);UNL.add(id);await save();renderList()}
+const SYS=()=>`Eres un asistente educativo cálido y paciente para familias que hacen educación en casa. ${LANG==='en'?'Always respond in clear English (titles, feedback, exercises and explanations), even though these instructions are written in Spanish.':'Responde siempre en español claro (salvo que la materia sea inglés).'} El estudiante${cur()?' se llama '+cur().name+' y':''} tiene ${age()} años: adapta vocabulario y ejemplos a esa edad. Metodología de aprendizaje por dominio: el estudiante avanza solo cuando demuestra dominio (80% o más); das pistas antes que respuestas; tratas cada error como una oportunidad de aprender (nombras la idea equivocada con amabilidad, la explicas y propones otro intento); das retroalimentación inmediata, específica y alentadora; elogias el esfuerzo y la estrategia, no solo el resultado.`;
+
+const ready=(async()=>{
+  try{const c=window.claude;if(c){sample=wrapSample(await c.use('sample'));const db=await c.use('db'),u=await c.use('user');
+    if(db&&u){docRef=db.doc('data/users/'+await u.id()+'/profiles');const s=await docRef.get();if(s.exists){const d=JSON.parse(JSON.stringify(s.data()));S=(d.list||[]).concat(S);TU=d.tutor||TU;LES=d.les||[];VID=d.vids||[]}}}}catch(e){}
+  if(!docRef){try{S=JSON.parse(localStorage.getItem('stu')||'[]')}catch(e){}try{TU=JSON.parse(localStorage.getItem('tut'))||TU}catch(e){}try{LES=JSON.parse(localStorage.getItem('les'))||[]}catch(e){}try{VID=JSON.parse(localStorage.getItem('vid'))||[]}catch(e){}}
+  try{act=localStorage.getItem('act')}catch(e){}
+  if(!cur())act=S[0]?S[0].id:null;
+  fillTutor();$('note').textContent=docRef?'🔒 Los perfiles se guardan de forma privada en tu cuenta.':'Los perfiles se guardan solo en este navegador.';
+  renderAll();
+  if(cur()&&cur().pin&&!UNL.has(act)){if(!await unlock(act)){act=null;renderAll();goto('est')}}
+})();
+let saveOk=true,saveErr='';
+async function save(){saveOk=true;try{if(docRef)await Promise.race([docRef.set({list:S,tutor:TU,les:LES,vids:VID}),new Promise((_,j)=>setTimeout(()=>j(new Error('tiempo agotado')),8000))]);else{localStorage.setItem('stu',JSON.stringify(S));localStorage.setItem('tut',JSON.stringify(TU));localStorage.setItem('les',JSON.stringify(LES));localStorage.setItem('vid',JSON.stringify(VID))}}catch(e){saveOk=false;saveErr=String((e&&e.message)||e);$('note').textContent='⚠️ No se pudo guardar el cambio.'}}
+async function need(){await ready;if(!sample)throw{message:'La IA no está disponible en esta vista. Ábrela desde claude.ai y acepta el permiso.'};return sample}
+
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===t));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id===t.dataset.p));
+});
+const goto=p=>document.querySelector(`.tab[data-p="${p}"]`).click();
+
+/* Estudiantes */
+for(let i=3;i<=18;i++)$('edad').add(new Option(i+' años',i));
+$('edad').value=8;
+$('avs').innerHTML=AVS.map(a=>`<button class="av${a===av?' on':''}" data-a="${a}">${a}</button>`).join('');
+$('avs').onclick=e=>{const b=e.target.closest('.av');if(!b)return;av=b.dataset.a;document.querySelectorAll('.av').forEach(x=>x.classList.toggle('on',x===b))};
+$('reg').onclick=async()=>{
+  const n=$('nom').value.trim();if(!n){$('regErr').textContent='Escribe un nombre.';return}
+  const pw=$('nPin').value;if(pw.length<4){$('regErr').textContent='La clave debe tener al menos 4 caracteres.';return}
+  $('regErr').textContent='';const salt=Math.random().toString(36).slice(2),s={id:'s'+Date.now().toString(36),name:n,age:+$('edad').value,av,prog:{},salt,pin:await hp(pw,salt)};
+  try{S.push(s);UNL.add(s.id);act=s.id;$('nom').value='';$('nPin').value='';pick(s.id);goto('apr')}catch(e){$('regErr').textContent='Error: '+(e.message||e);return}
+  await save();
+};
+function pick(id){act=id;try{localStorage.setItem('act',id)}catch(e){}hist.length=0;$('chat').innerHTML='';$('hOut').innerHTML='';hello();renderAll()}
+function stats(s){const p=Object.values(s.prog||{}),q=p.filter(x=>x.n);return{l:p.filter(x=>x.l).length,avg:q.length?Math.round(q.reduce((a,x)=>a+x.s,0)/q.length):null}}
+function renderList(){
+  $('list').innerHTML=S.map(s=>{const st=stats(s);return`<div class="card stu"><div style="display:flex;gap:12px;align-items:center"><span class="big">${s.av}</span><div><b>${esc(s.name)}</b> · ${s.age} años<div class="small">${st.l} lecciones · ${st.avg===null?'sin cuestionarios':'promedio '+st.avg+'%'}${dayGrade(s)!==null?' · hoy '+dayGrade(s)+'%':''}</div></div></div>
+  <div class="chips"><button class="btn g" data-go="${s.id}">${s.id===act?'Activo ✓':'Elegir'}</button><button class="btn g" data-key="${s.id}">${s.pin?'🔑 Cambiar clave':'🔑 Poner clave'}</button><button class="btn g" data-del="${s.id}">Eliminar</button></div></div>`}).join('')||'<p class="hint">Aún no hay estudiantes. Registra el primero arriba.</p>';
+}
+$('list').onclick=async e=>{
+  const g=e.target.dataset.go,d=e.target.dataset.del;
+  if(g)choose(g);
+  const kk=e.target.dataset.key;if(kk)setPin(kk);
+  if(d){if(e.target.dataset.arm!=='1'){e.target.dataset.arm='1';e.target.textContent='¿Seguro?';return}
+    if(!await unlock(d))return;
+    S=S.filter(s=>s.id!==d);if(act===d)act=S[0]?S[0].id:null;await save();pick(act)}
+};
+function renderBar(){$('act').innerHTML=(act?'':'<option value="">— elige un estudiante —</option>')+S.map(s=>`<option value="${s.id}"${s.id===act?' selected':''}>${s.av} ${esc(s.name)} (${s.age})</option>`).join('')||'<option>— sin registrar —</option>'}
+$('act').onchange=()=>{if($('act').value)choose($('act').value)};
+function renderAll(){renderBar();renderList();renderLearn();renderPro();renderRec();renderFx();renderVx();renderPlan();hwHist();ensureTopics()}
+
+/* Aprender */
+function renderLearn(){
+  const s=cur();$('aprMsg').innerHTML=s?'':'<div class="card">Elige o registra a un estudiante en la pestaña <b>Estudiantes</b>.</div>';
+  $('aprBox').hidden=!s;if(!s)return;
+  $('bandTxt').textContent=BANDS[band(s.age)];
+  const vs=VID.filter(v=>v.subj===subj&&(v.b==='all'||+v.b===band(s.age)));$('vMent').hidden=!vs.length;$('vList').innerHTML=vs.map(v=>`<div><a href="${esc(v.url)}" target="_blank" rel="noopener">▶ ${esc(v.title)}</a></div>`).join('');
+  $('subs').innerHTML=Object.entries(SUBJ).map(([k,v])=>`<button class="chip${k===subj?' on':''}" data-s="${k}">${v}</button>`).join('');
+  const p=s.prog||{};
+  const fx=LES.filter(l=>l.subj===subj&&(l.b==='all'||+l.b===band(s.age))).map(l=>`<button class="chip" data-f="${l.id}">✔ ${esc(l.title)}</button>`).join('');$('tops').innerHTML=fx+topics(subj,band(s.age)).map(t=>{const r=p[subj+'|'+t];
+    return`<button class="chip" data-t="${esc(t)}">${r&&(r.n||r.dx)?IC[lvl(r)]+' ':''}${esc(t)}${r&&r.n?' · '+r.s+'%':''}</button>`}).join('');
+}
+$('subs').onclick=e=>{const b=e.target.closest('[data-s]');if(b){subj=b.dataset.s;renderLearn()}};
+$('tops').onclick=e=>{const f=e.target.closest('[data-f]');if(f){fixed(f.dataset.f);return}const b=e.target.closest('[data-t]');if(b)lesson(b.dataset.t)};
+function fixed(id){const l=LES.find(x=>x.id===id);if(!l)return;topic=l.title;FX=l;vids();$('expBox').hidden=false;$('expOut').textContent='';$('lesCard').hidden=false;$('qzBtn').hidden=false;$('qz').innerHTML='';$('qzErr').textContent='';$('les').textContent=l.title+'\n\n'+l.text+'\n\n✔ Lección revisada por tu mentor';$('lesCard').scrollIntoView({behavior:'smooth'});mark(false)}
+$('ownBtn').onclick=()=>{const t=$('own').value.trim().replace(/["<>&]/g,'');if(t)lesson(t)};
+function notice(pct){
+  const s=cur(),g=dayGrade(s),d=document.createElement('div');d.className='card';
+  const msg=`✅ ${s.name} terminó la tarea: ${topic} (${SUBJ[subj].replace(/^\S+\s/,'')}).\nCuestionario: ${pct}%. Calificación del día: ${g}% (${lab(g)}).`;
+  d.innerHTML=`<b>🎉 ¡Tarea cumplida!</b><p class="small">Avisa a ${esc(TU.name||'tu tutor')} para que revise el avance:</p><div class="chips">${links(msg)}</div>`;$('qz').appendChild(d);
+}
+async function lesson(t,reinf){
+  topic=t;FX=null;vids();$('expBox').hidden=true;$('lesCard').hidden=false;$('qzBtn').hidden=true;$('qz').innerHTML='';$('qzErr').textContent='';$('les').textContent='Preparando la lección…';
+  $('lesCard').scrollIntoView({behavior:'smooth'});
+  const small=age()<=5;
+  try{const s=await need();
+    const r=await s(`${SYS()} Materia: ${SUBJ[subj]}. Escribe una lección sobre "${t}".${modeTxt(subj,t)}${X[subj]||''}${reinf?' Es un REPASO: al estudiante le costó este tema; explícalo desde otro ángulo, con más ejemplos y un mini juego de práctica.':''} Formato en texto plano, sin símbolos de markdown: un título; "Meta de aprendizaje" (qué podrá hacer al terminar); explicación breve con ejemplos de la vida diaria; un ejemplo resuelto paso a paso; un ejemplo guiado con preguntas; "Error común" (el error más frecuente y cómo evitarlo); "Inténtalo tú" (un ejercicio sin dar la respuesta); y un resumen en 3 puntos. ${small?'Es para 3–5 años: muy breve, tipo juego, y debe hacerse junto a un adulto que la lea en voz alta.':'Longitud: unas 250 palabras.'}`,{cache:false,onText:({text})=>{$('les').textContent=text}});
+    $('les').textContent=r.text;$('qzBtn').hidden=false;$('expBox').hidden=false;$('expOut').textContent='';mark(false);
+  }catch(e){$('les').textContent=e.message||'No se pudo crear la lección.'}
+}
+function mark(quiz,pct,errs){
+  const s=cur();if(!s)return;const k=subj+'|'+topic;s.prog=s.prog||{};const p=s.prog[k]=s.prog[k]||{l:1,s:0,n:0};p.l=1;
+  if(quiz){p.h=(p.h||(p.n?[p.s]:[])).concat(pct).slice(-5);p.n++;p.s=Math.max(p.s,pct);if(errs&&errs.length)p.err=(p.err||[]).concat(errs).slice(-6)}logEv(quiz?'q':'l',k,pct);const nc=quiz?award(s):null;save();renderLearn();renderList();renderPro();renderPlan();if(nc)showCert(s,nc);
+}
+$('qzBtn').onclick=async()=>{
+  $('qzBtn').disabled=true;$('qzErr').textContent='';$('qz').innerHTML='<p class="hint">Preparando preguntas…</p>';
+  try{const s=await need();const n=age()<=8?4:5;
+    const d=await s.json(`${SYS()} Crea ${n} preguntas de opción múltiple (3 opciones si es menor de 9 años, si no 4) sobre "${topic}" (${SUBJ[subj]}), basadas en una lección para su edad.${FX?` Usa SOLO este texto como base: """${FX.text.slice(0,3000)}"""`:''} ${age()<=5?'Preguntas muy simples que un adulto leerá en voz alta.':''} ${adapt()} Responde SOLO con JSON: [{"q":"pregunta","o":["..."],"c":índiceCorrecto,"h":"pista que no revela la respuesta","w":["por qué cada opción es correcta o incorrecta, en el mismo orden que o"],"e":"explicación breve"}]`,{cache:false});
+    const qs=(Array.isArray(d)?d:d.preguntas||[]).filter(i=>i&&Array.isArray(i.o)&&typeof i.c==='number');
+    if(!qs.length)throw{message:'No se pudo crear el cuestionario. Inténtalo de nuevo.'};
+    renderQuiz2(qs);
+  }catch(e){$('qz').innerHTML='';$('qzErr').textContent=e.message||'Error al crear el cuestionario.'}
+  $('qzBtn').disabled=false;
+};
+function renderQuiz(qs){
+  let done=0,ok=0;const box=$('qz');box.innerHTML='';const sc=document.createElement('p');sc.className='score';
+  qs.forEach((it,i)=>{
+    const c=document.createElement('div');c.className='card q';c.innerHTML=`<b>${i+1}. ${esc(it.q)}</b>`;
+    const why=document.createElement('div');why.className='why';why.hidden=true;why.textContent=it.e||'';
+    it.o.forEach((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent=o;
+      b.onclick=()=>{if(c.dataset.d)return;c.dataset.d=1;done++;const good=j===it.c;if(good)ok++;
+        b.classList.add(good?'ok':'bad');if(!good)c.querySelectorAll('.opt')[it.c].classList.add('ok');why.hidden=false;
+        if(done===qs.length){const pct=Math.round(ok/qs.length*100);sc.textContent=`Resultado: ${ok} de ${qs.length} (${pct}%). ${pct===100?'¡Excelente! 🎉':'¡Buen trabajo! Repasa las explicaciones.'}`;mark(true,pct);notice(pct)}};
+      c.appendChild(b)});
+    c.appendChild(why);box.appendChild(c)});
+  box.appendChild(sc);
+}
+
+/* Tutor */
+function addMsg(cls,t){const d=document.createElement('div');d.className='msg '+cls;d.textContent=t;$('chat').appendChild(d);$('chat').scrollTop=1e9;return d}
+function hello(){addMsg('a','¡Hola'+(cur()?', '+cur().name:'')+'! Soy tu tutor. ¿Qué estás estudiando hoy?')}
+async function send(){
+  const q=$('chatIn').value.trim();if(!q)return;$('chatIn').value='';$('chatBtn').disabled=true;
+  addMsg('u',q);hist.push({role:'user',content:q});const bub=addMsg('a','…');
+  try{const s=await need();
+    const ins=SYS()+' Actúa como tutor de dominio: primero pregunta qué entiende ya el estudiante; dale una pista 1, luego una pista 2 y solo después explica paso a paso; cuando se equivoque, di qué idea parece confundir y por qué es normal; cierra con una mini pregunta de comprobación. Máximo 120 palabras. Conversación:';
+    const m=hist.slice(-8).map((x,i)=>i===0?{role:x.role,content:ins+'\n\n'+x.content}:x);if(m[0].role!=='user')m.shift();
+    const r=await s(m,{cache:false,onText:({text})=>{bub.textContent=text;$('chat').scrollTop=1e9}});
+    bub.textContent=r.text;hist.push({role:'assistant',content:r.text});
+  }catch(e){bub.textContent=e.message||'No pude responder.';hist.pop()}
+  $('chatBtn').disabled=false;$('chatIn').focus();
+}
+$('chatBtn').onclick=send;$('chatIn').onkeydown=e=>{if(e.key==='Enter')send()};
+hello();
+
+/* Diccionario */
+function renderRec(){const s=cur(),w=[...new Set(((s&&s.log)||[]).filter(x=>x.t==='w').map(x=>x.k).reverse())].slice(0,8);
+  $('dRec').innerHTML=w.length?'<span class="small">Recientes:</span>'+w.map(x=>`<button class="chip" data-w="${esc(x)}">${esc(x)}</button>`).join(''):''}
+async function define(w){
+  w=w.trim().replace(/["<>&]/g,'');if(!w)return;$('dWord').value=w;
+  const sb=$('dSub').value,ctx=sb?` en el contexto de ${SUBJ[sb].replace(/^\S+\s/,'')}`:'';
+  $('dBtn').disabled=true;$('dOut').textContent='Buscando…';
+  try{const s=await need();
+    const r=await s(`${SYS()} Eres un diccionario escolar. Explica "${w}"${ctx}. Texto plano sin markdown, con estas partes: Significado (palabras sencillas para su edad), Ejemplo (una oración), Dato curioso (una frase) y Palabras relacionadas (2 o 3). ${age()<=5?'Máximo 3 frases cortas.':''} Si la palabra tiene varios sentidos, usa el de la materia indicada.`,{onText:({text})=>{$('dOut').textContent=text}});
+    $('dOut').textContent=r.text;logEv('w',w);await save();renderRec();renderPro();
+  }catch(e){$('dOut').textContent=e.message||'No se pudo buscar la palabra.'}
+  $('dBtn').disabled=false;
+}
+$('dBtn').onclick=()=>define($('dWord').value);
+$('dWord').onkeydown=e=>{if(e.key==='Enter')define($('dWord').value)};
+$('dRec').onclick=e=>{const b=e.target.closest('[data-w]');if(b)define(b.dataset.w)};
+
+/* Progreso */
+function weak(s){return Object.entries(s.prog||{}).filter(([,p])=>p.n&&lvl(p)<3).map(([k,p])=>[k,p.h?p.h[p.h.length-1]:p.s])}
+function report(s){
+  const d=today(),L=(s.log||[]).filter(x=>x.d===d),nm=k=>k.split('|')[1],u=a=>[...new Set(a)];
+  if(!L.length)return `📚 ${s.name} (${d}): todavía no hay actividad hoy.`;
+  const q=L.filter(x=>x.t==='q'),g=dayGrade(s),ls=u(L.filter(x=>x.t==='l').map(x=>nm(x.k))),ws=u(L.filter(x=>x.t==='w').map(x=>x.k)),th=u(L.filter(x=>x.t==='h').map(x=>nm(x.k))),wk=weak(s).map(([k])=>nm(k));
+  return `📚 Reporte de ${s.name} (${d})`+(ls.length?`\nLecciones: ${ls.join(', ')}`:'')+q.map(x=>`\n✅ ${nm(x.k)}: ${x.p}%`).join('')+(g!==null?`\nCalificación del día: ${g}% (${lab(g)})`:'')+(th.length?`\n📓 ${th.join(', ')}`:'')+(ws.length?`\nPalabras consultadas: ${ws.join(', ')}`:'')+(wk.length?`\nPara reforzar: ${wk.join(', ')}`:'');
+}
+function renderPro(){
+  const s=cur();
+  if(!s){$('pGrade').innerHTML='<p class="hint">Registra un estudiante primero.</p>';$('pWeak').innerHTML='';$('pSend').innerHTML='';return}
+  const g=dayGrade(s),n=(s.log||[]).filter(x=>x.d===today()&&x.t==='q').length;
+  $('pGrade').innerHTML=g===null?'<p class="hint">Aún no hay cuestionarios hoy.</p>':`<div class="grade">${g}%</div><div class="small">${lab(g)} · ${n} cuestionario${n>1?'s':''} hoy</div>`;
+  const w=weak(s);
+  $('pWeak').innerHTML=w.length?w.map(([k,p])=>`<button class="chip" data-r="${esc(k)}">${SUBJ[k.split('|')[0]].split(' ')[0]} ${esc(k.split('|')[1])} · ${p}%</button>`).join(''):'<span class="small">¡Nada por reforzar! Los temas sin dominio (menos de 80%) aparecerán aquí.</span>';
+  $('pSend').innerHTML=links(report(s));renderCh(s);renderUse();
+}
+$('pWeak').onclick=e=>{const b=e.target.closest('[data-r]');if(!b)return;const [k,...r]=b.dataset.r.split('|');subj=k;goto('apr');renderLearn();lesson(r.join('|'),true)};
+$('tSave').onclick=async()=>{TU={name:$('tName').value.trim().slice(0,40),wa:$('tWa').value.replace(/\D/g,''),mail:$('tMail').value.trim().replace(/["'<>&\s]/g,'')};$('tOk').textContent='Guardando…';renderPro();await save();$('tOk').textContent=saveOk?'Guardado ✓':'⚠️ No se guardó en tu cuenta: '+saveErr};
+
+/* Gráficos y lecciones fijas */
+const X={bib:' Enseña desde la Biblia con enfoque cristiano; cita solo pasajes reales (libro y capítulo) y no inventes versículos.',pnl:' Enfócalo como habilidades prácticas de comunicación y manejo de emociones, sin promesas científicas exageradas.',dib:' Incluye instrucciones de trazo paso a paso que se puedan hacer con regla, escuadra y compás.',fis:' Incluye un experimento sencillo y seguro con materiales caseros, hecho con un adulto.',qui:' Propón solo experimentos seguros con materiales de cocina y supervisión de un adulto; nunca mezclas peligrosas ni productos de limpieza.',bio:' Relaciónalo con ejemplos que pueda observar en casa o en la naturaleza.',pro:' Si su edad lo permite, incluye ejemplos de código cortos y comentados, explicando qué hace cada línea; para niños pequeños usa actividades sin computador.',py:' Si su edad lo permite, incluye código Python corto y comentado que pueda copiar y probar, y explica qué hace cada línea.',jav:' Si su edad lo permite, incluye código Java corto y comentado, indicando la clase y el método main cuando haga falta; para niños pequeños usa actividades sin computador.',ia:' Usa ejemplos sencillos, menciona que la IA puede equivocarse y enseña a usarla de forma segura y responsable.',dat:' Usa datos pequeños que se puedan contar o calcular a mano o en una hoja de cálculo.'};
+function renderCh(s){
+  const L=s.log||[],avg=a=>Math.round(a.reduce((x,y)=>x+y,0)/a.length),
+  bar=(l,v)=>`<div style="display:flex;align-items:center;gap:8px;margin:4px 0;font-family:system-ui,sans-serif;font-size:.85rem"><span style="width:130px;flex:none">${l}</span><div style="flex:1;background:var(--line);border-radius:6px;height:14px"><div style="width:${v}%;background:var(--acc);height:100%;border-radius:6px"></div></div><b style="width:42px;text-align:right">${v}%</b></div>`;
+  const by={};L.filter(x=>x.t==='q').forEach(x=>{const k=x.k.split('|')[0];(by[k]=by[k]||[]).push(x.p)});
+  const subs=Object.entries(by).map(([k,a])=>bar(SUBJ[k]||k,avg(a)));
+  const days=[];for(let i=6;i>=0;i--){const d=new Date(Date.now()-i*864e5).toLocaleDateString('en-CA'),q=L.filter(x=>x.d===d&&x.t==='q');days.push({d:d.slice(5),v:q.length?avg(q.map(x=>x.p)):null,n:L.filter(x=>x.d===d).length})}
+  const col=days.map(x=>`<div style="flex:1;text-align:center;font-family:system-ui,sans-serif;font-size:.75rem"><div style="height:90px;display:flex;align-items:flex-end;justify-content:center"><div style="width:70%;height:${x.v||0}%;background:var(--acc);border-radius:6px 6px 0 0"></div></div><div>${x.v===null?'–':x.v+'%'}</div><div style="color:var(--mute)">${x.d}</div></div>`).join('');
+  $('pCh').innerHTML=`<b class="small">Calificación por día (últimos 7 días)</b><div style="display:flex;gap:4px;margin:8px 0 16px">${col}</div><b class="small">Promedio por materia</b>${subs.join('')||'<p class="hint">Aún no hay cuestionarios.</p>'}<b class="small" style="display:block;margin-top:12px">Actividad por día (lecciones, cuestionarios y palabras)</b><p class="small">${days.map(x=>x.d+': '+x.n).join(' · ')}</p>`;
+}
+$('fSub').innerHTML=Object.entries(SUBJ).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
+$('fBand').innerHTML='<option value="all">Todas las edades</option>'+BANDS.map((b,i)=>`<option value="${i}">${b}</option>`).join('');
+function renderFx(){$('fList').innerHTML=LES.map(l=>`<div class="stu" style="margin-bottom:6px"><span class="small">${SUBJ[l.subj]||''} · ${l.b==='all'?'Todas':BANDS[+l.b]} · <b>${esc(l.title)}</b></span><button class="btn g" data-x="${l.id}">Eliminar</button></div>`).join('')}
+$('fSave').onclick=async()=>{const t=$('fTit').value.trim().replace(/["<>&]/g,''),x=$('fTxt').value.trim();if(!t||!x){$('fMsg').textContent='Escribe título y contenido.';return}
+  LES.push({id:'f'+Date.now().toString(36),subj:$('fSub').value,b:$('fBand').value,title:t,text:x.slice(0,6000)});$('fTit').value=$('fTxt').value='';renderFx();renderLearn();$('fMsg').textContent='Guardando…';await save();$('fMsg').textContent=saveOk?'Guardada ✓':'⚠️ Agregada, pero no se guardó en tu cuenta: '+saveErr};
+$('fList').onclick=async e=>{const d=e.target.dataset.x;if(d){LES=LES.filter(l=>l.id!==d);await save();renderFx();renderLearn()}};
+
+/* Videos */
+function vids(){
+  const sn=SUBJ[subj].replace(/^\S+\s/,''),a=age(),yt=q=>'https://www.youtube.com/results?search_query='+encodeURIComponent(q),who=a<=11?`para niños de ${a} años`:'explicación';
+  const L=[['▶ Videos que explican',`${topic} ${sn} ${who}`],['🧪 Ejemplos y práctica',`${topic} ${sn} ejemplos ${who}`]].map(([l,q])=>`<a class="btn g" target="_blank" rel="noopener" href="${yt(q)}">${l}</a>`).join('');
+  $('vLinks').innerHTML=`<b class="small">🎬 Buscar en YouTube</b><div class="chips" style="margin:6px 0">${L}${a<=8?'<a class="btn g" target="_blank" rel="noopener" href="https://www.youtubekids.com/">YouTube Kids</a>':''}</div><p class="small">Un adulto debe elegir y acompañar el video.</p>`;
+}
+$('vSub').innerHTML=$('fSub').innerHTML;$('vBand').innerHTML=$('fBand').innerHTML;
+function renderVx(){$('vAdmin').innerHTML=VID.map(v=>`<div class="stu" style="margin-bottom:6px"><span class="small">${SUBJ[v.subj]||''} · ${v.b==='all'?'Todas':BANDS[+v.b]} · <b>${esc(v.title)}</b></span><button class="btn g" data-v="${v.id}">Eliminar</button></div>`).join('')}
+$('vSave').onclick=async()=>{
+  const t=$('vTit').value.trim().replace(/["<>&]/g,'');let u;
+  try{const x=new URL($('vUrl').value.trim());if(x.protocol!=='https:'||!/^(www\.|m\.)?(youtube\.com|youtu\.be)$/.test(x.hostname))throw 0;u=x.href}catch(e){$('vMsg').textContent='Pega un enlace válido de YouTube (https://…).';return}
+  if(!t){$('vMsg').textContent='Escribe un título.';return}
+  VID.push({id:'v'+Date.now().toString(36),subj:$('vSub').value,b:$('vBand').value,title:t,url:u});$('vTit').value=$('vUrl').value='';renderVx();renderLearn();$('vMsg').textContent='Guardando…';await save();$('vMsg').textContent=saveOk?'Guardado ✓':'⚠️ Agregado, pero no se guardó en tu cuenta: '+saveErr;
+};
+$('vAdmin').onclick=async e=>{const d=e.target.dataset.v;if(d){VID=VID.filter(v=>v.id!==d);await save();renderVx();renderLearn()}};
+
+/* Plan diario y explicaciones */
+const done=(s,k,t)=>{const r=(s.prog||{})[k+'|'+t];return lvl(r)>=3};
+function path(s,k){const b=band(s.age);return LES.filter(l=>l.subj===k&&(l.b==='all'||+l.b===b)).map(l=>({t:l.title,f:l.id})).concat(topics(k,b).map(t=>({t}))).concat(((s.extra||{})[k+'|'+b]||[]).map(t=>({t})))}
+function renderPlan(){
+  const s=cur();if(!s){$('certList').innerHTML='';$('planList').innerHTML='<div class="card">Primero registra a un estudiante en la pestaña Estudiantes.</div>';return}
+  renderCerts(s);$('planList').innerHTML=Object.keys(SUBJ).map(k=>{
+    const P=path(s,k),d=P.filter(x=>done(s,k,x.t)).length,n=P.findIndex(x=>!done(s,k,x.t)),pct=Math.round(d/P.length*100);
+    return `<div class="card"><div class="stu"><b>${SUBJ[k]}</b><span class="small">${d}/${P.length} temas ${(s.dx||{})[k+'|'+band(s.age)]?'':`<button class="btn g" data-dx="${k}">🧭 Diagnóstico</button>`}</span></div><div style="background:var(--line);border-radius:6px;height:8px;margin:8px 0"><div style="width:${pct}%;background:var(--acc);height:100%;border-radius:6px"></div></div><div class="small" style="margin-bottom:10px">${P.map((x,i)=>`${i+1}. ${i===n?'▶':IC[lvl((s.prog||{})[k+'|'+x.t])]} ${esc(x.t)}`).join(' · ')}</div>${n<0?`<span class="small">🎉 ¡Materia completada!</span> <button class="btn" data-gen="${k}">✨ Generar 6 temas nuevos</button>`:`<button class="btn" data-pk="${k}" data-pi="${n}">▶ Día ${n+1}: ${esc(P[n].t)}</button>`}</div>`}).join('');
+}
+$('planList').onclick=e=>{const g=e.target.closest('[data-gen]');if(g){gen(g.dataset.gen,g);return}const dx=e.target.closest('[data-dx]');if(dx){diag(dx.dataset.dx,dx);return}const b=e.target.closest('[data-pk]');if(!b)return;const s=cur(),x=path(s,b.dataset.pk)[+b.dataset.pi];if(!x)return;subj=b.dataset.pk;goto('apr');renderLearn();x.f?fixed(x.f):lesson(x.t)};
+async function explain(kind,q){
+  const M={facil:'Explícalo de forma más fácil, con palabras muy simples y una comparación con algo cotidiano.',ejemplo:'Dame otro ejemplo distinto y claro, y explica por qué funciona.',pasos:'Explícalo paso a paso, numerando cada paso.',vida:'Muestra dónde se usa en la vida real con 2 ejemplos prácticos.'};
+  $('expOut').textContent='Pensando…';
+  try{const s=await need();
+    const r=await s(`${SYS()} Materia: ${SUBJ[subj].replace(/^\S+\s/,'')}. Tema: "${topic}". Lección de referencia:\n"""${$('les').textContent.slice(0,1800)}"""\n${q?`El estudiante pregunta: "${q}". Responde su duda con claridad.`:M[kind]} Texto plano sin markdown, máximo 150 palabras.${X[subj]||''}`,{cache:false,onText:({text})=>{$('expOut').textContent=text}});
+    $('expOut').textContent=r.text;
+  }catch(e){$('expOut').textContent=e.message||'No se pudo explicar el tema.'}
+}
+$('expBox').onclick=e=>{const b=e.target.closest('[data-e]');if(b)explain(b.dataset.e)};
+$('expBtn').onclick=()=>{const q=$('expIn').value.trim();if(q){explain('',q);$('expIn').value=''}};
+
+/* Certificados y temas nuevos */
+function base(s,k){const b=band(s.age);return LES.filter(l=>l.subj===k&&(l.b==='all'||+l.b===b)).map(l=>({t:l.title})).concat(topics(k,b).map(t=>({t})))}
+function award(s){const k=subj,b=band(s.age);if((s.certs||[]).some(c=>c.k===k&&c.b===b))return null;
+  const P=base(s,k);if(!P.every(x=>done(s,k,x.t)))return null;
+  const sc=P.map(x=>s.prog[k+'|'+x.t].s),c={k,b,d:today(),avg:Math.round(sc.reduce((a,x)=>a+x,0)/sc.length)};(s.certs=s.certs||[]).push(c);return c}
+function showCert(s,c){
+  const f=new Date(c.d+'T12:00:00').toLocaleDateString(LANG,{day:'numeric',month:'long',year:'numeric'});
+  $('certB').innerHTML=`<div style="font-size:2.4rem">🏅</div><div style="letter-spacing:.2em;font-size:.8rem;color:#8a6a1f">REDIFICADOR MENTORING</div><h2 style="margin:6px 0 14px;font-size:1.7rem">Certificado de logro</h2><p>Se otorga a</p><div style="font-size:2rem;font-weight:700;margin:4px 0 12px">${esc(s.name)}</div><p>por completar con éxito el curso de <b>${esc(SUBJ[c.k].replace(/^\S+\s/,''))}</b><br>nivel ${BANDS[c.b]}, con un promedio de <b>${c.avg}%</b>.</p><p style="margin:14px 0">🎉 ¡Felicitaciones! Tu esfuerzo y constancia dan frutos.</p><div style="display:flex;justify-content:space-around;margin-top:24px;font-size:.85rem"><div>${f}<hr style="margin:4px 0"><span>Fecha</span></div><div>${esc(TU.name||'Tu mentor')}<hr style="margin:4px 0"><span>Mentor</span></div></div>`;
+  $('cert').hidden=false}
+$('certX').onclick=()=>{$('cert').hidden=true};
+$('certP').onclick=()=>{try{window.print()}catch(e){}};
+function renderCerts(s){const L=s.certs||[];$('certList').innerHTML=L.length?`<div class="card"><b>🏅 Certificados de ${esc(s.name)}</b><div class="chips" style="margin-top:8px">${L.map((c,i)=>`<button class="chip" data-c="${i}">${SUBJ[c.k]} · ${BANDS[c.b]}</button>`).join('')}</div></div>`:''}
+$('certList').onclick=e=>{const b=e.target.closest('[data-c]'),s=cur();if(b&&s)showCert(s,s.certs[+b.dataset.c])};
+async function gen(k,btn){
+  const s=cur(),b=band(s.age),P=path(s,k).map(x=>x.t);btn.disabled=true;btn.textContent='Creando temas…';$('planMsg').textContent='';
+  try{const sm=await need();
+    const d=await sm.json(`${SYS()} Materia: ${SUBJ[k].replace(/^\S+\s/,'')}. El estudiante ya completó estos temas: ${P.join(', ')}. Propón 6 temas NUEVOS, de nivel un poco más avanzado y apropiados para ${s.age} años, sin repetir. Responde SOLO con JSON: ["tema 1","tema 2"] (títulos de máximo 6 palabras).`,{cache:false});
+    const L=(Array.isArray(d)?d:d.temas||[]).map(t=>String(t).replace(/["<>&|]/g,'').trim()).filter(t=>t&&!P.includes(t)).slice(0,6);
+    if(!L.length)throw{message:'No se pudieron crear temas. Inténtalo de nuevo.'};
+    s.extra=s.extra||{};s.extra[k+'|'+b]=(s.extra[k+'|'+b]||[]).concat(L);renderPlan();await save();
+  }catch(e){btn.disabled=false;btn.textContent='✨ Generar 6 temas nuevos';$('planMsg').textContent=e.message||'No se pudieron crear temas.'}
+}
+
+/* Dominio, diagnóstico y práctica adaptativa */
+function lvl(p){if(!p)return 0;const h=p.h||(p.n?[p.s]:[]);if(!h.length)return p.dx||0;const a=h[h.length-1],b=h[h.length-2];return a>=90&&b>=90?4:a>=80?3:a>=60?2:1}
+const modeTxt=(k,t)=>{const l=lvl(((cur()||{}).prog||{})[k+'|'+t]);return l===0?'':l===1?' El estudiante tuvo dificultades: da más apoyo, pasos pequeños y ejemplos extra.':l===2?' Ya conoce lo básico: haz un repaso breve y pasa pronto a ejercicios.':' El estudiante ya domina el tema: plantea un desafío de nivel superior.'};
+function adapt(){const p=((cur()||{}).prog||{})[subj+'|'+topic],l=lvl(p),er=((p&&p.err)||[]).slice(-4);
+  return `Dificultad: ${['inicial, con preguntas guiadas','fácil a media','media','media a difícil','difícil, con retos de aplicación'][l]}.`+(er.length?` Incluye variantes de estos errores previos del estudiante: ${er.join(' | ')}.`:'')}
+function renderQuiz2(qs){
+  let fin=0,pts=0;const box=$('qz'),errs=[];box.innerHTML='';const sc=document.createElement('div');
+  qs.forEach((it,i)=>{
+    const c=document.createElement('div');c.className='card q';c.innerHTML=`<b>${i+1}. ${esc(it.q)}</b>`;
+    const fb=document.createElement('div');fb.className='why';fb.hidden=true;let tries=0,over=false;const W=Array.isArray(it.w)?it.w:[];
+    const bs=it.o.map((o,j)=>{const b=document.createElement('button');b.className='opt';b.textContent=o;
+      b.onclick=()=>{if(over||b.disabled)return;tries++;fb.hidden=false;
+        if(j===it.c){over=true;b.classList.add('ok');pts+=tries===1?1:.5;fb.innerHTML=`✅ ${tries===1?'¡Correcto!':'¡Muy bien, lo lograste al intentarlo de nuevo!'} ${esc(it.e||'')}`;bs.forEach(x=>x.disabled=true);end()}
+        else{b.classList.add('bad');b.disabled=true;
+          if(tries===1){errs.push(it.q);fb.innerHTML=`💡 Aún no, ¡y está bien: así se aprende! ${esc(W[j]||'')}<br><b>Pista:</b> ${esc(it.h||'Relee el enunciado con calma.')}<br>Inténtalo de nuevo.`}
+          else{over=true;bs[it.c].classList.add('ok');bs.forEach(x=>x.disabled=true);fb.innerHTML=`📘 Veamos juntos: ${esc(W[j]||'')} La respuesta correcta es “${esc(it.o[it.c])}”. ${esc(it.e||'')}`;end()}}};
+      c.appendChild(b);return b});
+    c.appendChild(fb);box.appendChild(c)});
+  box.appendChild(sc);
+  function end(){fin++;if(fin<qs.length)return;const pct=Math.round(pts/qs.length*100);mark(true,pct,errs);
+    const L=lvl(cur().prog[subj+'|'+topic]);
+    sc.innerHTML=`<p class="score">Resultado: ${pct}% · Nivel de dominio: ${IC[L]} ${LV[L]}</p><p>${L>=3?'🎉 ¡Dominaste este tema! Ya puedes pasar al siguiente día del plan.':'Todavía no llegas a 80%. No pasa nada: repasa los comentarios y practica otra vez con preguntas nuevas.'}</p>${L<3?'<button class="btn" id="again">🔁 Practicar de nuevo</button>':''}`;
+    const ag=$('again');if(ag)ag.onclick=()=>$('qzBtn').click();notice(pct)}
+}
+async function diag(k,btn){
+  const s=cur(),b=band(s.age),T6=base(s,k).map(x=>x.t).slice(0,8);btn.disabled=true;btn.textContent='Preparando…';$('planMsg').textContent='';
+  try{const sm=await need();
+    const d=await sm.json(`${SYS()} Materia: ${SUBJ[k].replace(/^\S+\s/,'')}. Crea una evaluación diagnóstica con UNA pregunta de opción múltiple (4 opciones; 3 si es menor de 9 años) por cada uno de estos temas, de dificultad media para ${s.age} años: ${T6.join(' | ')}. Responde SOLO con JSON: [{"t":"tema exacto","q":"pregunta","o":["..."],"c":índiceCorrecto,"e":"explicación breve"}]`,{cache:false});
+    const qs=(Array.isArray(d)?d:[]).filter(i=>i&&Array.isArray(i.o)&&typeof i.c==='number'&&T6.includes(i.t));
+    if(!qs.length)throw{message:'No se pudo crear el diagnóstico. Inténtalo de nuevo.'};
+    showDx(s,k,b,qs);
+  }catch(e){$('planMsg').textContent=e.message||'Error al crear el diagnóstico.'}
+  btn.disabled=false;btn.textContent='🧭 Diagnóstico';
+}
+function showDx(s,k,b,qs){
+  const box=$('dxBox'),res={};let n=0;box.innerHTML=`<div class="card"><b>🧭 Diagnóstico de ${esc(SUBJ[k])}</b><p class="small">Responde sin ayuda. No es una nota: sirve para saber desde dónde empezar.</p></div>`;
+  qs.forEach((it,i)=>{const c=document.createElement('div');c.className='card q';c.innerHTML=`<b>${i+1}. ${esc(it.q)}</b>`;const fb=document.createElement('div');fb.className='why';fb.hidden=true;
+    it.o.forEach((o,j)=>{const bt=document.createElement('button');bt.className='opt';bt.textContent=o;
+      bt.onclick=()=>{if(c.dataset.d)return;c.dataset.d=1;n++;const ok=j===it.c;res[it.t]=ok;bt.classList.add(ok?'ok':'bad');if(!ok)c.querySelectorAll('.opt')[it.c].classList.add('ok');fb.hidden=false;fb.textContent=(ok?'✅ ¡Bien! ':'💡 Aún no lo dominas, y está bien. ')+(it.e||'');if(n===qs.length)fin()};c.appendChild(bt)});
+    c.appendChild(fb);box.appendChild(c)});
+  async function fin(){s.dx=s.dx||{};s.dx[k+'|'+b]=today();s.prog=s.prog||{};
+    Object.entries(res).forEach(([t,ok])=>{const key=k+'|'+t,p=s.prog[key]=s.prog[key]||{l:0,s:0,n:0};if(ok&&!p.n)p.dx=2});
+    const first=base(s,k).find(x=>!done(s,k,x.t)),ok=Object.values(res).filter(Boolean).length,d=document.createElement('div');d.className='card';
+    d.innerHTML=`<p class="score">Resultado: ${ok} de ${qs.length} temas ya conocidos.</p><p>${first?'Tu plan empieza en: <b>'+esc(first.t)+'</b>. Los temas que ya conoces (◑) solo necesitan un repaso breve y un cuestionario.':'¡Ya conoces todo este nivel!'}</p><button class="btn g" id="dxX">Cerrar</button>`;
+    box.appendChild(d);$('dxX').onclick=()=>{box.innerHTML=''};await save();renderPlan();renderList()}
+}
+
+/* Tarea para el cuaderno */
+const HWH={mat:' Para Matemáticas usa secciones como: sumas o restas, divisiones, y factores o múltiplos (o fracciones, según la edad y el nivel); escribe cada operación completa, por ejemplo 348 ÷ 6 = ?. Para 3 a 5 años usa conteo y dibujos sencillos.'};
+function hwTopics(s,k){const w=Object.entries(s.prog||{}).filter(([q,p])=>q.startsWith(k+'|')&&p.n&&lvl(p)<3).map(([q])=>q.slice(k.length+1)),P=path(s,k),nx=P.find(x=>!done(s,k,x.t));
+  return {w,cur:nx?nx.t:'',dn:P.filter(x=>done(s,k,x.t)).slice(-2).map(x=>x.t)}}
+const hwText=(h,s)=>`📓 TAREA DE ${h.sn.toUpperCase()} · ${s.name} · ${h.d}\n${h.instr}\n\n`+h.secs.map(x=>x.n+':\n'+x.items.map((t,i)=>`${i+1}. ${t}`).join('\n')).join('\n\n');
+window.addEventListener('afterprint',()=>document.body.classList.remove('ph'));
+function hwPrint(h,s){
+  $('hwp').innerHTML=`<h2 style="margin:0">REDIFICADOR MENTORING · Tarea de ${esc(h.sn)}</h2><p>Nombre: <b>${esc(s.name)}</b> &nbsp;&nbsp; Fecha: ${h.d} &nbsp;&nbsp; Cuaderno de ${esc(h.sn)}</p><p><i>${esc(h.instr)}</i></p>`+h.secs.map(x=>`<h3>${esc(x.n)}</h3><ol>${x.items.map(t=>`<li style="margin:10px 0">${esc(t)}</li>`).join('')}</ol>`).join('');
+  document.body.classList.add('ph');try{window.print()}catch(e){document.body.classList.remove('ph');$('hCopyMsg').textContent='La impresión no está disponible aquí: usa Copiar o WhatsApp.'}
+}
+function hwShow(h){
+  const s=cur();if(!s)return;
+  $('hOut').innerHTML=`<div class="card"><h3 style="margin-top:0">${esc(h.title)}</h3><p class="small">${esc(h.instr)}</p>${h.secs.map(x=>`<b>${esc(x.n)}</b><ol style="margin:6px 0 14px;padding-left:22px">${x.items.map(t=>`<li style="margin:5px 0">${esc(t)}</li>`).join('')}</ol>`).join('')}
+  <div class="chips" style="margin-top:8px"><button class="btn" id="hPrint">🖨️ Imprimir</button><a class="btn g" id="hWa" target="_blank" rel="noopener">💬 WhatsApp</a><a class="btn g" id="hMail" target="_blank" rel="noopener">✉️ Correo</a><button class="btn g" id="hCopy">📋 Copiar</button></div>
+  <p class="small" id="hCopyMsg">Si no se abre la impresión, usa Copiar, WhatsApp o correo.</p>
+  <details style="margin-top:10px"><summary class="small">🔑 Respuestas (solo adultos)</summary>${h.secs.map(x=>`<p class="small"><b>${esc(x.n)}:</b> ${(x.ans||[]).map((a,i)=>`${i+1}) ${esc(a)}`).join(' · ')}</p>`).join('')}</details>
+  <div style="margin-top:12px">${h.done?'<span class="score">✅ Tarea hecha</span>':'<button class="btn" id="hDone">✅ Marcar tarea hecha</button>'}</div><div id="hNote"></div></div>`;
+  const t=trStr(hwText(h,s));$('hWa').href='https://wa.me/?text='+encodeURIComponent(t);$('hMail').href='mailto:?subject='+encodeURIComponent('Tarea de '+h.sn+' · '+s.name)+'&body='+encodeURIComponent(t);
+  $('hPrint').onclick=()=>hwPrint(h,s);
+  $('hCopy').onclick=async()=>{try{await navigator.clipboard.writeText(t);$('hCopyMsg').textContent='Copiado ✓'}catch(e){$('hCopyMsg').textContent='No se pudo copiar automáticamente.'}};
+  const dn=$('hDone');if(dn)dn.onclick=()=>hwDone(h,s);
+}
+async function hwDone(h,s){
+  h.done=true;logEv('h',h.k+'|Tarea de '+h.sn);hwShow(h);
+  $('hNote').innerHTML=`<p class="small">🎉 ¡Buen trabajo! Avisa a ${esc(TU.name||'tu tutor')}:</p><div class="chips">${links(`📓 ${s.name} terminó la tarea de ${h.sn} (${h.d}).`)}</div>`;
+  await save();hwHist();renderPro();
+}
+function hwHist(){const s=cur(),L=((s&&s.hw)||[]).slice().reverse().slice(0,8);
+  $('hHist').innerHTML=L.length?`<div class="card"><b>📚 Tareas anteriores</b>${L.map(h=>`<div class="stu" style="margin-top:6px"><span class="small">${h.d} · ${esc(h.sn)} · ${h.done?'✅ hecha':'⏳ pendiente'}</span><button class="btn g" data-h="${h.id}">Ver</button></div>`).join('')}</div>`:''}
+$('hHist').onclick=e=>{const b=e.target.closest('[data-h]'),s=cur();if(!b||!s)return;const h=(s.hw||[]).find(x=>x.id===b.dataset.h);if(h){hwShow(h);$('hOut').scrollIntoView({behavior:'smooth'})}};
+$('hSub').innerHTML=$('fSub').innerHTML;
+$('hGen').onclick=async()=>{
+  const s=cur();if(!s){$('hErr').textContent='Primero elige o registra un estudiante.';return}
+  const k=$('hSub').value,b=band(s.age),n=+$('hN').value,sn=SUBJ[k].replace(/^\S+\s/,''),tp=hwTopics(s,k);
+  $('hErr').textContent='';$('hGen').disabled=true;$('hOut').innerHTML='<p class="hint">Preparando la tarea…</p>';
+  try{const sm=await need();
+    const d=await sm.json(`${SYS()} Materia: ${sn}. Crea la TAREA DIARIA para que el estudiante trabaje en su cuaderno de ${sn} (nivel: ${BANDS[b]}, ${s.age} años). Prioriza reforzar: ${tp.w.join(', ')||'ningún tema en particular'}. Tema actual: ${tp.cur||'repaso general'}. Repasa también: ${tp.dn.join(', ')||'nada aún'}. Crea 3 secciones con EXACTAMENTE ${n} ejercicios cada una, variados, de dificultad apropiada y progresiva. Todo debe poder resolverse a mano en un cuaderno (en programación, escribir el código a mano).${HWH[k]||' Adapta los tipos de ejercicio a la materia (preguntas, completar, problemas, dibujos o actividades).'} Responde SOLO con JSON: {"titulo":"...","instr":"instrucción corta para el cuaderno","secs":[{"n":"nombre de la sección","items":["ejercicio"],"ans":["respuesta o criterio de corrección"]}]}`,{cache:false});
+    const secs=(d.secs||[]).filter(x=>x&&Array.isArray(x.items)&&x.items.length).slice(0,3).map(x=>({n:String(x.n||'Ejercicios'),items:x.items.map(String).slice(0,n),ans:(x.ans||[]).map(String).slice(0,n)}));
+    if(!secs.length)throw{message:'No se pudo crear la tarea. Inténtalo de nuevo.'};
+    const h={id:'h'+Date.now().toString(36),k,sn,d:today(),title:String(d.titulo||'Tarea de '+sn),instr:String(d.instr||'Copia y resuelve en tu cuaderno.'),secs,done:false};
+    s.hw=(s.hw||[]).concat(h).slice(-15);hwShow(h);hwHist();await save();
+  }catch(e){$('hOut').innerHTML='';$('hErr').textContent=e.message||'Error al crear la tarea.'}
+  $('hGen').disabled=false;
+};
+
+/* Uso de IA */
+var PX=(function(){try{return JSON.parse(localStorage.getItem('px'))||{i:0.10,o:0.50}}catch(e){return {i:0.10,o:0.50}}})();
+let lastAct=Date.now(),actTick=0;
+['pointerdown','keydown','scroll'].forEach(ev=>addEventListener(ev,()=>{lastAct=Date.now()},{passive:true}));
+function activeTab(){return ((document.querySelector('.tab[aria-selected="true"]')||{dataset:{}}).dataset.p)||'x'}
+function useDay(st){const u=st.use=st.use||{},d=today();return u[d]=u[d]||{n:0,ms:0,ti:0,to:0,act:0,ai:0,f:{}}}
+setInterval(()=>{const st=cur();if(!st||document.hidden||Date.now()-lastAct>60000)return;const r=useDay(st);r.act+=10;if(['apr','tut','dic','hw'].includes(activeTab()))r.ai+=10;if(++actTick%6===0)save()},10000);
+function wrapSample(s){if(!s)return s;
+  const rec=(p,out,ms)=>{const st=cur();if(!st)return;const r=useDay(st),u=window.__u;window.__u=null;
+    r.n++;r.ms+=ms;r.ti+=u?u.i:Math.ceil(String(p).length/4);r.to+=u?u.o:Math.ceil(String(out).length/4);const f=activeTab();r.f[f]=(r.f[f]||0)+1;
+    const ks=Object.keys(st.use).sort();while(ks.length>30)delete st.use[ks.shift()];save()};
+  const w=async(p,o)=>{const t=Date.now(),r=await s(p,o);rec(typeof p==='string'?p:JSON.stringify(p),(r&&r.text)||'',Date.now()-t);return r};
+  w.json=async(p,o)=>{const t=Date.now(),r=await s.json(p,o);rec(p,JSON.stringify(r),Date.now()-t);return r};
+  return w}
+function renderUse(){
+  const px=PX||{i:0.10,o:0.50},days=[...Array(7)].map((_,i)=>new Date(Date.now()-i*864e5).toLocaleDateString('en-CA')),fmt=n=>n>=1000?(n/1000).toFixed(1)+'k':n;
+  const rows=S.map(st=>{const a={n:0,act:0,ai:0,ti:0,to:0};days.forEach(d=>{const r=(st.use||{})[d];if(r)for(const k in a)a[k]+=r[k]||0});return{st,a,c:(a.ti*px.i+a.to*px.o)/1e6}});
+  $('pUse').innerHTML=`<p class="small">Últimos 7 días, por estudiante. Los tokens son estimados (caracteres ÷ 4) si el servicio no informa el dato real. "Min. con IA" es el tiempo activo en Aprender, Tutor, Diccionario y Tarea.</p><div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-family:system-ui,sans-serif;font-size:.85rem"><tr style="text-align:left;color:var(--mute)"><th>Estudiante</th><th>Consultas</th><th>Min. app</th><th>Min. con IA</th><th>Tokens ent./sal.</th><th class="cc">Costo 7 d</th><th class="cc">≈ Mes</th></tr>${rows.map(({st,a,c})=>`<tr style="border-top:1px solid var(--line)"><td>${st.av} ${esc(st.name)}</td><td>${a.n}</td><td>${Math.round(a.act/60)}</td><td>${Math.round(a.ai/60)}</td><td>${fmt(a.ti)} / ${fmt(a.to)}</td><td class="cc">$${c.toFixed(3)}</td><td class="cc">$${(c/7*30).toFixed(2)}</td></tr>`).join('')}</table></div><div class="row cc" style="margin-top:12px"><div><label>USD por millón de tokens: entrada</label><input id="pxI" inputmode="decimal" value="${px.i}"></div><div><label>USD por millón de tokens: salida</label><input id="pxO" inputmode="decimal" value="${px.o}"></div></div><button class="btn g cc" id="pxS">Aplicar precios</button> <span class="small cc">Por defecto: Haiku 5.5 (0,10 / 0,50). Sonnet 5.5: 2 / 10. Verifica los precios vigentes de Anthropic.</span>`;
+  $('pxS').onclick=()=>{const n=x=>parseFloat(String($(x).value).replace(',','.'))||0;PX={i:n('pxI'),o:n('pxO')};try{localStorage.setItem('px',JSON.stringify(PX))}catch(e){}renderUse()}
+}
+
+/* Administrador: la tarjeta de uso de IA solo aparece con la clave del administrador */
+let ADM=false;
+function admView(){$('uCard').hidden=!ADM;$('admB').textContent=ADM?'🔓 Salir de administrador':'🔒 Administrador'}
+$('admB').onclick=async()=>{
+  if(ADM){ADM=false;admView();return}
+  let st=null;try{st=JSON.parse(localStorage.getItem('adm'))}catch(e){}
+  if(!st){const a=await ask('Crea tu clave de administrador','Mínimo 4 caracteres. Solo tú deberías conocerla.');if(a===null)return;if(a.length<4)return;
+    st={salt:Math.random().toString(36).slice(2)};st.pin=await hp(a,st.salt);try{localStorage.setItem('adm',JSON.stringify(st))}catch(e){}ADM=true;admView();renderUse();return}
+  const v=await ask('Clave de administrador','Escribe tu clave.');if(v===null)return;
+  if(await hp(v,st.salt)===st.pin){ADM=true;admView();renderUse()}
+};
+$('cB').onclick=()=>{const c=$('uCard');c.classList.toggle('nc');$('cB').textContent=c.classList.contains('nc')?'💲 Mostrar costo':'💲 Ocultar costo'};
+
+/* Adultos */
+async function stream(btn,out,prompt){
+  btn.disabled=true;out.textContent='Pensando…';
+  try{const s=await need();const r=await s(prompt,{cache:false,onText:({text})=>{out.textContent=text}});out.textContent=r.text}
+  catch(e){out.textContent=e.message||'Ocurrió un error.'}
+  btn.disabled=false;
+}
+$('pBtn').onclick=()=>{const t=$('pTema').value.trim();if(!t){$('pOut').textContent='Escribe una materia o tema.';return}
+  stream($('pBtn'),$('pOut'),`${SYS()} Eres asesor de madres, padres o tutores. Crea un plan de lecciones sobre "${t}" para ${$('pDur').value}, con ${$('pTime').value} al día, estilo de aprendizaje: ${$('pEst').value}. Texto plano: objetivo, materiales económicos, cuadro día por día con actividad y duración, idea de evaluación y un consejo para el adulto. Sin símbolos de markdown.`)};
+$('rBtn').onclick=()=>{const w=$('rTxt').value.trim();if(!w){$('rOut').textContent='Pega el trabajo del estudiante.';return}
+  stream($('rBtn'),$('rOut'),`${SYS()} Eres asesor de madres, padres o tutores. Consigna: "${$('rCons').value}". Trabajo:\n"""${w}"""\nDa retroalimentación amable y específica en texto plano: 1) lo que hizo bien, 2) cada error: la idea equivocada probable y cómo corregirla (el error es una oportunidad de aprender), 3) 3 ejercicios nuevos de dificultad creciente (fácil, medio, reto) sin dar respuestas, 4) cómo conversarlo con el estudiante. Sin símbolos de markdown.`)};
+</script>
+</body>
+</html>
